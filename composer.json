@@ -1,0 +1,18 @@
+{
+    "name": "mmazoni/data-structure",
+    "description": "Implementing most of data structures in PHP 8",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Matheus Mazoni",
+            "email": "mmazoni.andrade@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "MMazoni\\DataStructure\\": "src/"
+        }
+    }
+}

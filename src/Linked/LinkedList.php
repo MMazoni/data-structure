@@ -5,16 +5,16 @@ namespace MMazoni\DataStructure\Linked;
 class LinkedList
 {
     public function __construct(
-        private mixed $head = null,
+        private $head = null,
         private int $totalNodes = 0
     ) {}
 
-    public function insertAtBack($data): bool
+    public function insertAtBack($data): void
     {
         $newNode = new Node();
         $newNode->setData($data);
-        
-        if (is_null($this->head)) {
+
+        if ($this->head === null) {
             $this->head = &$newNode;
         } else {
             $currentNode = $this->head;
@@ -24,9 +24,20 @@ class LinkedList
             $currentNode->setNext($newNode);
         }
         $this->totalNodes++;
-        return true;
     }
 
+    public function insertAtFront($data): void
+    {
+        $newNode = new Node($data);
+        if ($this->head === null) {
+            $this->head = &$newNode;
+        } else {
+            $currentFirstNode = $this->head;
+            $this->head = &$newNode;
+            $newNode->setNext($currentFirstNode);
+        }
+        $this->totalNodes++;
+    }
 
     public function display()
     {
@@ -36,6 +47,25 @@ class LinkedList
             echo $currentNode->getData() . PHP_EOL;
             $currentNode = $currentNode->getNext();
         }
+    }
+
+    public function searchNode($data): mixed
+    {
+        if ($this->head) {
+            $currentNode = $this->head;
+            while ($currentNode !== null) {
+                if ($currentNode->getData() === $data) {
+                    return $currentNode;
+                }
+                $currentNode = $currentNode->getNext();
+            }
+        }
+        return false;
+    }
+
+    public function head(): ?Node
+    {
+        return $this->head;
     }
 
     public function totalNodes(): int

@@ -6,8 +6,10 @@ require __DIR__ . "/vendor/autoload.php";
 
 
 $linkedList = new LinkedList();
-$linkedList->insert(10);
-$linkedList->insert(5);
-$linkedList->insert(3);
-$linkedList->insert(11);
+$linkedList->insertAtBack(10);
+$linkedList->insertAtBack(5);
+$linkedList->insertAtBack(3);
+$linkedList->insertAtBack(11);
+$linkedList->insertAtFront('front');
+$linkedList->insertAtBack(111);
 $linkedList->display();

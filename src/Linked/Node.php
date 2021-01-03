@@ -20,12 +20,12 @@ class Node
         return $this->data;
     }
 
-    public function setNext(mixed $next): void
+    public function setNext(Node $next): void
     {
         $this->next = $next;
     }
 
-    public function getNext(): mixed
+    public function getNext(): ?Node
     {
         return $this->next;
     }

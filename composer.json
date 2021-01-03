@@ -9,10 +9,15 @@
             "email": "mmazoni.andrade@gmail.com"
         }
     ],
-    "require": {},
     "autoload": {
         "psr-4": {
             "MMazoni\\DataStructure\\": "src/"
         }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    },
+    "scripts": {
+        "test": "phpunit tests"
     }
 }

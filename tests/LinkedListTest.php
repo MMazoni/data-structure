@@ -40,4 +40,30 @@ final class LinkedListTest extends TestCase
         $this->assertNotFalse($linkedList->searchNode(10));
         $this->assertEquals(10, $searchedNode->getData());
     }
+
+    public function testCanInsertBeforeNode(): void
+    {
+        $linkedList = new LinkedList();
+        $linkedList->insertAtBack(3);
+        $linkedList->insertAtBack(11);
+        $linkedList->insertAtFront('7');
+        $linkedList->insertAtFront(10);
+        $linkedList->insertBeforeNode('nou', 11);
+        $this->assertEquals(5, $linkedList->totalNodes());
+        $searchedNode = $linkedList->searchNode('nou');
+        $this->assertEquals(11, $searchedNode->getNext()->getData());
+    }
+
+    public function testCanInsertAfterNode(): void
+    {
+        $linkedList = new LinkedList();
+        $linkedList->insertAtBack(3);
+        $linkedList->insertAtBack(11);
+        $linkedList->insertAtFront('7');
+        $linkedList->insertAtFront(10);
+        $linkedList->insertAfterNode('nou', 10);
+        $this->assertEquals(5, $linkedList->totalNodes());
+        $searchedNode = $linkedList->searchNode(10);
+        $this->assertEquals('nou', $searchedNode->getNext()->getData());
+    }
 }

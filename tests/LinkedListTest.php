@@ -66,4 +66,29 @@ final class LinkedListTest extends TestCase
         $searchedNode = $linkedList->searchNode(10);
         $this->assertEquals('nou', $searchedNode->getNext()->getData());
     }
+
+    public function testCanDeleteFirstNode(): void
+    {
+        $linkedList = new LinkedList();
+        $linkedList->insertAtBack(3);
+        $linkedList->insertAtBack(11);
+        $linkedList->insertAtFront('7');
+        $linkedList->insertAtFront(10);
+        $linkedList->deleteFirstNode();
+        $this->assertEquals(3, $linkedList->totalNodes());
+        $this->assertEquals(7, $linkedList->head()->getData());
+    }
+
+    public function testCanDeleteLastNode(): void
+    {
+        $linkedList = new LinkedList();
+        $linkedList->insertAtBack(3);
+        $linkedList->insertAtBack(11);
+        $linkedList->insertAtFront('7');
+        $linkedList->insertAtFront(10);
+        $linkedList->deleteLastNode();
+        $this->assertEquals(3, $linkedList->totalNodes());
+        $this->assertEquals(3, $linkedList->head()
+            ->getNext()->getNext()->getData());
+    }
 }

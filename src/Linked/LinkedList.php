@@ -5,7 +5,7 @@ namespace MMazoni\DataStructure\Linked;
 class LinkedList
 {
     public function __construct(
-        private $head = null,
+        private ?Node $head = null,
         private int $totalNodes = 0
     ) {}
 
@@ -111,5 +111,40 @@ class LinkedList
                 $nextNode = $currentNode->getNext();
             }
         }
+    }
+
+    public function deleteFirstNode(): bool
+    {
+        if ($this->head) {
+            if ($this->head->getNext() !== null) {
+                $this->head = $this->head->getNext();
+            } else {
+                $this->head = null;
+            }
+            $this->totalNodes--;
+            return true;
+        }
+        return false;
+    }
+
+    public function deleteLastNode(): bool
+    {
+        if ($this->head !== null) {
+            $currentNode = $this->head;
+            if ($currentNode->getNext() === null) {
+                $this->head = null;
+            } else {
+                $previousNode = null;
+                while ($currentNode->getNext() !== null) {
+                    $previousNode = $currentNode;
+                    $currentNode = $currentNode->getNext();
+                }
+
+                $previousNode->setNext(null);
+                $this->totalNodes--;
+                return true;
+            }
+        }
+        return false;
     }
 }

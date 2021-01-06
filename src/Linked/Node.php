@@ -6,8 +6,8 @@ class Node
 {
 
     public function __construct(
-        public $data = 0,
-        public $next = null
+        public mixed $data = 0,
+        public ?Node $next = null
     ) {}
 
     public function setData(mixed $data): void
@@ -20,7 +20,7 @@ class Node
         return $this->data;
     }
 
-    public function setNext(Node $next): void
+    public function setNext(?Node $next): void
     {
         $this->next = $next;
     }

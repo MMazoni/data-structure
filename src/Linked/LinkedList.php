@@ -147,4 +147,44 @@ class LinkedList
         }
         return false;
     }
+
+    public function deleteNode(mixed $query = null): bool
+    {
+        if ($this->head) {
+            $previous = null;
+            $currentNode = $this->head;
+            while ($currentNode !== null) {
+                if ($currentNode->getData() === $query) {
+                    if ($currentNode->getNext() === null) {
+                        $previous->setNext(null);
+                    } else {
+                        $previous->setNext($currentNode->getNext());
+                    }
+                    $this->totalNodes--;
+                    return true;
+                }
+                $previous = $currentNode;
+                $currentNode = $currentNode->getNext();
+            }
+        }
+        return false;
+    }
+
+    public function reverse(): void
+    {
+        if ($this->head !== null) {
+            if ($this->head->getNext() !== null) {
+                $reversedList = null;
+                $next = null;
+                $currentNode = $this->head;
+                while ($currentNode !== null) {
+                    $next = $currentNode->getNext();
+                    $currentNode->setNext($reversedList);
+                    $reversedList = $currentNode;
+                    $currentNode = $next;
+                }
+                $this->head = $reversedList;
+            }
+        }
+    }
 }

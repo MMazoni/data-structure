@@ -12,4 +12,6 @@ $linkedList->insertAtBack(3);
 $linkedList->insertAtBack(11);
 $linkedList->insertAtFront('front');
 $linkedList->insertAtBack(111);
+$linkedList->reverse($linkedList);
+$linkedList->deleteNode(5);
 $linkedList->display();

@@ -91,4 +91,33 @@ final class LinkedListTest extends TestCase
         $this->assertEquals(3, $linkedList->head()
             ->getNext()->getNext()->getData());
     }
+
+    public function testCanDeleteNode(): void
+    {
+        $linkedList = new LinkedList();
+        $linkedList->insertAtBack(3);
+        $linkedList->insertAtBack(11);
+        $linkedList->insertAtFront('7');
+        $linkedList->insertAtFront(10);
+        $this->assertTrue($linkedList->deleteNode(11));
+        $this->assertEquals(3, $linkedList->totalNodes());
+        $this->assertEquals(10, $linkedList->head()->getData());
+    }
+
+    public function testCanReverseList(): void
+    {
+        $linkedList = new LinkedList();
+        $linkedList->insertAtBack(3);
+        $linkedList->insertAtBack(11);
+        $linkedList->insertAtFront('7');
+        $linkedList->insertAtFront(10);
+        $linkedList->reverse();
+        $this->assertEquals(11, $linkedList->head()->getData());
+        $this->assertEquals(3, $linkedList->head()
+            ->getNext()->getData());
+        $this->assertEquals(7, $linkedList->head()
+            ->getNext()->getNext()->getData());
+        $this->assertEquals(10, $linkedList->head()
+            ->getNext()->getNext()->getNext()->getData());
+    }
 }

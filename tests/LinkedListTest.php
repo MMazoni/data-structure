@@ -120,4 +120,15 @@ final class LinkedListTest extends TestCase
         $this->assertEquals(10, $linkedList->head()
             ->getNext()->getNext()->getNext()->getData());
     }
+
+    public function testCanGetNthNode(): void
+    {
+        $linkedList = new LinkedList();
+        $linkedList->insertAtBack(3);
+        $linkedList->insertAtBack(11);
+        $linkedList->insertAtFront('7');
+        $linkedList->insertAtFront(10);
+        $this->assertEquals(10, $linkedList->getNthNode(1)->getData());
+        $this->assertEquals(3, $linkedList->getNthNode(3)->getData());
+    }
 }

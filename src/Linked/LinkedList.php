@@ -187,4 +187,20 @@ class LinkedList
             }
         }
     }
+
+    public function getNthNode(int $position = 0): ?Node
+    {
+        $count = 1;
+        if ($this->head !== null) {
+            $currentNode = $this->head;
+            while ($currentNode !== null) {
+                if ($count === $position) {
+                    return $currentNode;
+                }
+                $count++;
+                $currentNode = $currentNode->getNext();
+            }
+        }
+        return null;
+    }
 }

@@ -131,4 +131,27 @@ final class LinkedListTest extends TestCase
         $this->assertEquals(10, $linkedList->getNthNode(1)->getData());
         $this->assertEquals(3, $linkedList->getNthNode(3)->getData());
     }
+
+    public function testCanIterate(): void
+    {
+        $linkedList = new LinkedList();
+        $linkedList->insertAtBack(3);
+        $linkedList->insertAtBack(11);
+        $linkedList->insertAtFront('7');
+        $linkedList->insertAtFront(10);
+        foreach ($linkedList as $key => $item) {
+            if ($key === 0) {
+                $this->assertEquals(10, $item);
+            }
+            if ($key === 1) {
+                $this->assertEquals('7', $item);
+            }
+            if ($key === 2) {
+                $this->assertEquals(3, $item);
+            }
+            if ($key === 3) {
+                $this->assertEquals(11, $item);
+            }
+        }
+    }
 }

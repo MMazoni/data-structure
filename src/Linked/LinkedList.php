@@ -2,11 +2,13 @@
 
 namespace MMazoni\DataStructure\Linked;
 
-class LinkedList
+class LinkedList implements \Iterator
 {
     public function __construct(
         private ?Node $head = null,
-        private int $totalNodes = 0
+        private int $totalNodes = 0,
+        private ?Node $currentNode = null,
+        private int $currentPosition = 0
     ) {}
 
     public function insertAtBack($data): void
@@ -202,5 +204,27 @@ class LinkedList
             }
         }
         return null;
+    }
+
+    public function current() {
+        return $this->currentNode->getData();
+    }
+
+    public function next() {
+        $this->currentPosition++;
+        $this->currentNode = $this->currentNode->getNext();
+    }
+
+    public function key() {
+        return $this->currentPosition;
+    }
+
+    public function rewind() {
+        $this->currentPosition = 0;
+        $this->currentNode = $this->head;
+    }
+
+    public function valid() {
+        return $this->currentNode !== null;
     }
 }

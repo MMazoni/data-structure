@@ -13,8 +13,7 @@ class LinkedList implements \Iterator
 
     public function insertAtBack($data): void
     {
-        $newNode = new Node();
-        $newNode->setData($data);
+        $newNode = new Node($data);
 
         if ($this->head === null) {
             $this->head = &$newNode;
@@ -82,7 +81,7 @@ class LinkedList implements \Iterator
             $previous = null;
             $currentNode = $this->head;
             while ($currentNode !== null) {
-                if ($currentNode->data === $query) {
+                if ($currentNode->getData() === $query) {
                     $newNode->setNext($currentNode);
                     $previous->setNext($newNode);
                     $this->totalNodes++;

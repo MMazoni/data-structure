@@ -6,9 +6,11 @@ class Node
 {
 
     public function __construct(
-        public mixed $data = 0,
-        public ?Node $next = null
-    ) {}
+        private mixed $data = 0,
+        private ?Node $next = null,
+        private ?Node $prev = null
+    ) {
+    }
 
     public function setData(mixed $data): void
     {
@@ -28,5 +30,15 @@ class Node
     public function getNext(): ?Node
     {
         return $this->next;
+    }
+
+    public function getPrev(): ?Node
+    {
+        return $this->prev;
+    }
+
+    public function setPrev(?Node $prev): void
+    {
+        $this->prev = $prev;
     }
 }

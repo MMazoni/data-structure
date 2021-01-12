@@ -6,7 +6,7 @@ class CircularLinkedList
 {
     public function __construct(
         private ?Node $head = null,
-        private int $total= 0
+        private int $totalNodes = 0
     )
     {}
 
@@ -38,5 +38,15 @@ class CircularLinkedList
         if ($currentNode) {
             echo $currentNode->getData() . PHP_EOL;
         }
+    }
+
+    public function head(): ?Node
+    {
+        return $this->head;
+    }
+
+    public function totalNodes(): int
+    {
+        return $this->totalNodes;
     }
 }

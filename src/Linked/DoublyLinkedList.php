@@ -46,8 +46,61 @@ class DoublyLinkedList
         return $this->head;
     }
 
+    public function tail(): ?Node
+    {
+        return $this->tail;
+    }
+
     public function totalNodes(): int
     {
         return $this->totalNodes;
     }
+
+    public function insertBeforeNode($data = null, $query = null): void
+    {
+        $newNode = new Node($data);
+        if ($this->head) {
+            $previous = null;
+            $currentNode = $this->head;
+            while ($currentNode !== null) {
+                if ($currentNode->getData() === $query) {
+                    $newNode->setNext($currentNode);
+                    $currentNode->setPrev($newNode);
+                    $previous->setNext($newNode);
+                    $newNode->setPrev($previous);
+                    $this->totalNodes++;
+                    break;
+                }
+                $previous = $currentNode;
+                $currentNode = $currentNode->getNext();
+            }
+        }
+    }
+
+    public function insertAfterNode($data = null, $query = null): void
+    {
+        $newNode = new Node($data);
+        if ($this->head) {
+            $nextNode = null;
+            $currentNode = $this->head;
+            while ($currentNode !== null) {
+                if ($currentNode->getData() === $query) {
+                    if ($nextNode !== null) {
+                        $newNode->setNext($nextNode);
+                    }
+                    if ($currentNode === $this->tail) {
+                        $this->tail = $newNode;
+                    }
+                    $currentNode->setNext($newNode);
+                    $nextNode->setPrev($newNode);
+                    $newNode->setPrev($currentNode);
+                    $this->totalNodes++;
+                    break;
+                }
+                $currentNode = $currentNode->getNext();
+                $nextNode = $currentNode->getNext();
+            }
+        }
+    }
+
 }

@@ -28,4 +28,28 @@ final class DoublyLinkedListTest extends TestCase
         $this->assertEquals(4, $doublyLinkedList->totalNodes());
         $this->assertEquals(10, $doublyLinkedList->head()->getData());
     }
+
+    public function testCanInsertBeforeNode(): void
+    {
+        $doublyLinkedList = new DoublyLinkedList();
+        $doublyLinkedList->insertAtBack(3);
+        $doublyLinkedList->insertAtBack(11);
+        $doublyLinkedList->insertAtFront('7');
+        $doublyLinkedList->insertAtFront(10);
+        $doublyLinkedList->insertBeforeNode('nou', 11);
+        $this->assertEquals(5, $doublyLinkedList->totalNodes());
+        $this->assertEquals('nou', $doublyLinkedList->tail()->getPrev()->getData());
+    }
+
+    public function testCanInsertAfterNode(): void
+    {
+        $doublyLinkedList = new DoublyLinkedList();
+        $doublyLinkedList->insertAtBack(3);
+        $doublyLinkedList->insertAtBack(11);
+        $doublyLinkedList->insertAtFront('7');
+        $doublyLinkedList->insertAtFront(10);
+        $doublyLinkedList->insertAfterNode('nou', 10);
+        $this->assertEquals(5, $doublyLinkedList->totalNodes());
+        $this->assertEquals('nou', $doublyLinkedList->head()->getNext()->getData());
+    }
 }

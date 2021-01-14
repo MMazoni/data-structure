@@ -92,7 +92,7 @@ class DoublyLinkedList
                         $this->tail = $newNode;
                     }
                     $currentNode->setNext($newNode);
-                    $nextNode->setPrev($newNode);
+                    $nextNode?->setPrev($newNode);
                     $newNode->setPrev($currentNode);
                     $this->totalNodes++;
                     break;
@@ -103,4 +103,36 @@ class DoublyLinkedList
         }
     }
 
+    public function deleteFirstNode(): bool
+    {
+        if ($this->head) {
+            if ($this->head->getNext() !== null) {
+                $this->head = $this->head->getNext();
+                $this->head->setPrev(null);
+            } else {
+                $this->head = null;
+            }
+            $this->totalNodes--;
+            return true;
+        }
+        return false;
+    }
+
+    public function deleteLastNode(): bool
+    {
+        if ($this->tail !== null) {
+            $currentNode = $this->tail;
+            if ($currentNode->getPrev() === null) {
+                $this->head = null;
+                $this->tail = null;
+            } else {
+                $previousNode = $currentNode->getPrev();
+                $this->tail = $previousNode;
+                $previousNode->setNext(null);
+                $this->totalNodes--;
+                return true;
+            }
+        }
+        return false;
+    }
 }

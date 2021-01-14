@@ -83,7 +83,7 @@ class LinkedList implements \Iterator
             while ($currentNode !== null) {
                 if ($currentNode->getData() === $query) {
                     $newNode->setNext($currentNode);
-                    $previous->setNext($newNode);
+                    $previous?->setNext($newNode);
                     $this->totalNodes++;
                     break;
                 }
@@ -157,9 +157,9 @@ class LinkedList implements \Iterator
             while ($currentNode !== null) {
                 if ($currentNode->getData() === $query) {
                     if ($currentNode->getNext() === null) {
-                        $previous->setNext(null);
+                        $previous?->setNext(null);
                     } else {
-                        $previous->setNext($currentNode->getNext());
+                        $previous?->setNext($currentNode->getNext());
                     }
                     $this->totalNodes--;
                     return true;

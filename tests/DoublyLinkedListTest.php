@@ -52,4 +52,29 @@ final class DoublyLinkedListTest extends TestCase
         $this->assertEquals(5, $doublyLinkedList->totalNodes());
         $this->assertEquals('nou', $doublyLinkedList->head()->getNext()->getData());
     }
+
+    public function testCanDeleteFirstNode(): void
+    {
+        $doublyLinkedList = new DoublyLinkedList();
+        $doublyLinkedList->insertAtBack(3);
+        $doublyLinkedList->insertAtBack(11);
+        $doublyLinkedList->insertAtFront('7');
+        $doublyLinkedList->insertAtFront(10);
+        $doublyLinkedList->deleteFirstNode();
+        $this->assertEquals(3, $doublyLinkedList->totalNodes());
+        $this->assertEquals(7, $doublyLinkedList->head()->getData());
+    }
+
+    public function testCanDeleteLastNode(): void
+    {
+        $doublyLinkedList = new DoublyLinkedList();
+        $doublyLinkedList->insertAtBack(3);
+        $doublyLinkedList->insertAtBack(11);
+        $doublyLinkedList->insertAtFront('7');
+        $doublyLinkedList->insertAtFront(10);
+        $doublyLinkedList->deleteLastNode();
+        $this->assertEquals(3, $doublyLinkedList->totalNodes());
+        $this->assertEquals(3, $doublyLinkedList->head()
+            ->getNext()->getNext()->getData());
+    }
 }

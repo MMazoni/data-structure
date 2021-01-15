@@ -66,7 +66,7 @@ class DoublyLinkedList
                 if ($currentNode->getData() === $query) {
                     $newNode->setNext($currentNode);
                     $currentNode->setPrev($newNode);
-                    $previous->setNext($newNode);
+                    $previous?->setNext($newNode);
                     $newNode->setPrev($previous);
                     $this->totalNodes++;
                     break;
@@ -134,5 +134,48 @@ class DoublyLinkedList
             }
         }
         return false;
+    }
+
+    public function deleteNode(mixed $query = null): bool
+    {
+        if ($this->head) {
+            $previous = null;
+            $currentNode = $this->head;
+            while ($currentNode !== null) {
+                if ($currentNode->getData() === $query) {
+                    if ($currentNode->getNext() === null) {
+                        $previous?->setNext(null);
+                    } else {
+                        $previous?->setNext($currentNode->getNext());
+                        $currentNode->getNext()->setPrev($previous);
+                    }
+                    $this->totalNodes--;
+                    return true;
+                }
+                $previous = $currentNode;
+                $currentNode = $currentNode->getNext();
+            }
+        }
+        return false;
+    }
+
+    public function displayForward(): void
+    {
+        echo "Total nodes: {$this->totalNodes}" . PHP_EOL;
+        $currentNode = $this->head;
+        while ($currentNode !== null) {
+            echo $currentNode->getData() . PHP_EOL;
+            $currentNode = $currentNode->getNext();
+        }
+    }
+
+    public function displayBackward(): void
+    {
+        echo "Total nodes: {$this->totalNodes}" . PHP_EOL;
+        $currentNode = $this->tail;
+        while ($currentNode !== null) {
+            echo $currentNode->getData() . PHP_EOL;
+            $currentNode = $currentNode->getPrev();
+        }
     }
 }

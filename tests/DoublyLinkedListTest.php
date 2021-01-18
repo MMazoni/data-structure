@@ -1,6 +1,6 @@
 <?php
 
-use MMazoni\DataStructure\Linked\DoublyLinkedList;
+use MMazoni\DataStructure\Linear\DoublyLinkedList;
 use PHPUnit\Framework\TestCase;
 
 final class DoublyLinkedListTest extends TestCase

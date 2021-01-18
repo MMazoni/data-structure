@@ -1,54 +1,72 @@
 <?php
 
-namespace MMazoni\DataStructure\Linked;
+namespace MMazoni\DataStructure\Linear;
 
-class DoublyLinkedList
+class LinkedList implements \Iterator
 {
     public function __construct(
         private ?Node $head = null,
-        private ?Node $tail = null,
-        private int $totalNodes = 0
-    )
-    {}
+        private int $totalNodes = 0,
+        private ?Node $currentNode = null,
+        private int $currentPosition = 0
+    ) {}
+
+    public function insertAtBack($data): void
+    {
+        $newNode = new Node($data);
+
+        if ($this->head === null) {
+            $this->head = &$newNode;
+        } else {
+            $currentNode = $this->head;
+            while ($currentNode->getNext() !== null) {
+                $currentNode = $currentNode->getNext();
+            }
+            $currentNode->setNext($newNode);
+        }
+        $this->totalNodes++;
+    }
 
     public function insertAtFront($data): void
     {
         $newNode = new Node($data);
         if ($this->head === null) {
             $this->head = &$newNode;
-            $this->tail = $newNode;
         } else {
             $currentFirstNode = $this->head;
             $this->head = &$newNode;
             $newNode->setNext($currentFirstNode);
-            $currentFirstNode->setPrev($newNode);
         }
         $this->totalNodes++;
     }
 
-    public function insertAtBack(mixed $data): void
+    public function display()
     {
-        $newNode = new Node($data);
-        if ($this->head === null) {
-            $this->head = &$newNode;
-            $this->tail = $newNode;
-        } else {
-            $currentNode = $this->tail;
-            $currentNode->setNext($newNode);
-            $newNode->setPrev($currentNode);
-            $this->tail = $newNode;
+        echo "Total nodes: {$this->totalNodes}" . PHP_EOL;
+        $currentNode = $this->head;
+        while (!is_null($currentNode)) {
+            echo $currentNode->getData() . PHP_EOL;
+            $currentNode = $currentNode->getNext();
         }
-        $this->totalNodes++;
+    }
+
+    public function searchNode($data): mixed
+    {
+        if ($this->head) {
+            $currentNode = $this->head;
+            while ($currentNode !== null) {
+                if ($currentNode->getData() === $data) {
+                    return $currentNode;
+                }
+                $currentNode = $currentNode->getNext();
+            }
+        }
+        return false;
     }
 
     public function head(): ?Node
     {
         return $this->head;
-    }
-
-    public function tail(): ?Node
-    {
-        return $this->tail;
     }
 
     public function totalNodes(): int
@@ -65,9 +83,7 @@ class DoublyLinkedList
             while ($currentNode !== null) {
                 if ($currentNode->getData() === $query) {
                     $newNode->setNext($currentNode);
-                    $currentNode->setPrev($newNode);
                     $previous?->setNext($newNode);
-                    $newNode->setPrev($previous);
                     $this->totalNodes++;
                     break;
                 }
@@ -88,12 +104,7 @@ class DoublyLinkedList
                     if ($nextNode !== null) {
                         $newNode->setNext($nextNode);
                     }
-                    if ($currentNode === $this->tail) {
-                        $this->tail = $newNode;
-                    }
                     $currentNode->setNext($newNode);
-                    $nextNode?->setPrev($newNode);
-                    $newNode->setPrev($currentNode);
                     $this->totalNodes++;
                     break;
                 }
@@ -108,7 +119,6 @@ class DoublyLinkedList
         if ($this->head) {
             if ($this->head->getNext() !== null) {
                 $this->head = $this->head->getNext();
-                $this->head->setPrev(null);
             } else {
                 $this->head = null;
             }
@@ -120,14 +130,17 @@ class DoublyLinkedList
 
     public function deleteLastNode(): bool
     {
-        if ($this->tail !== null) {
-            $currentNode = $this->tail;
-            if ($currentNode->getPrev() === null) {
+        if ($this->head !== null) {
+            $currentNode = $this->head;
+            if ($currentNode->getNext() === null) {
                 $this->head = null;
-                $this->tail = null;
             } else {
-                $previousNode = $currentNode->getPrev();
-                $this->tail = $previousNode;
+                $previousNode = null;
+                while ($currentNode->getNext() !== null) {
+                    $previousNode = $currentNode;
+                    $currentNode = $currentNode->getNext();
+                }
+
                 $previousNode->setNext(null);
                 $this->totalNodes--;
                 return true;
@@ -147,7 +160,6 @@ class DoublyLinkedList
                         $previous?->setNext(null);
                     } else {
                         $previous?->setNext($currentNode->getNext());
-                        $currentNode->getNext()->setPrev($previous);
                     }
                     $this->totalNodes--;
                     return true;
@@ -159,23 +171,59 @@ class DoublyLinkedList
         return false;
     }
 
-    public function displayForward(): void
+    public function reverse(): void
     {
-        echo "Total nodes: {$this->totalNodes}" . PHP_EOL;
-        $currentNode = $this->head;
-        while ($currentNode !== null) {
-            echo $currentNode->getData() . PHP_EOL;
-            $currentNode = $currentNode->getNext();
+        if ($this->head !== null) {
+            if ($this->head->getNext() !== null) {
+                $reversedList = null;
+                $next = null;
+                $currentNode = $this->head;
+                while ($currentNode !== null) {
+                    $next = $currentNode->getNext();
+                    $currentNode->setNext($reversedList);
+                    $reversedList = $currentNode;
+                    $currentNode = $next;
+                }
+                $this->head = $reversedList;
+            }
         }
     }
 
-    public function displayBackward(): void
+    public function getNthNode(int $position = 0): ?Node
     {
-        echo "Total nodes: {$this->totalNodes}" . PHP_EOL;
-        $currentNode = $this->tail;
-        while ($currentNode !== null) {
-            echo $currentNode->getData() . PHP_EOL;
-            $currentNode = $currentNode->getPrev();
+        $count = 1;
+        if ($this->head !== null) {
+            $currentNode = $this->head;
+            while ($currentNode !== null) {
+                if ($count === $position) {
+                    return $currentNode;
+                }
+                $count++;
+                $currentNode = $currentNode->getNext();
+            }
         }
+        return null;
+    }
+
+    public function current() {
+        return $this->currentNode->getData();
+    }
+
+    public function next() {
+        $this->currentPosition++;
+        $this->currentNode = $this->currentNode->getNext();
+    }
+
+    public function key() {
+        return $this->currentPosition;
+    }
+
+    public function rewind() {
+        $this->currentPosition = 0;
+        $this->currentNode = $this->head;
+    }
+
+    public function valid() {
+        return $this->currentNode !== null;
     }
 }

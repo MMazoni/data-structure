@@ -1,6 +1,6 @@
 <?php
 
-use MMazoni\DataStructure\Linked\LinkedList;
+use MMazoni\DataStructure\Linear\LinkedList;
 
 require __DIR__ . "/vendor/autoload.php";
 

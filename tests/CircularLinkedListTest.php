@@ -1,6 +1,6 @@
 <?php
 
-use MMazoni\DataStructure\Linked\CircularLinkedList;
+use MMazoni\DataStructure\Linear\CircularLinkedList;
 use PHPUnit\Framework\TestCase;
 
 final class CircularLinkedListTest extends TestCase

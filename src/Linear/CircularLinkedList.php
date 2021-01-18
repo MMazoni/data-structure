@@ -1,6 +1,6 @@
 <?php
 
-namespace MMazoni\DataStructure\Linked;
+namespace MMazoni\DataStructure\Linear;
 
 class CircularLinkedList
 {

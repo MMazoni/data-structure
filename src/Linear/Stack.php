@@ -1,6 +1,6 @@
 <?php
 
-namespace MMazoni\DataStructure\Stack;
+namespace MMazoni\DataStructure\Linear;
 
 interface Stack
 {

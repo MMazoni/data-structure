@@ -1,6 +1,6 @@
 <?php
 
-use MMazoni\DataStructure\Linked\LinkedList;
+use MMazoni\DataStructure\Linear\LinkedList;
 use PHPUnit\Framework\TestCase;
 
 final class LinkedListTest extends TestCase

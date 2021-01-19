@@ -3,8 +3,8 @@
 namespace MMazoni\DataStructure\Abstraction;
 
 use UnderflowException;
-use MMazoni\DataStructure\Stack\Stack;
-use MMazoni\DataStructure\Linked\LinkedList;
+use MMazoni\DataStructure\Linear\Stack;
+use MMazoni\DataStructure\Linear\LinkedList;
 
 class BooksList implements Stack
 {

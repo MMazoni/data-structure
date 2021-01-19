@@ -2,7 +2,7 @@
 
 namespace MMazoni\DataStructure\Abstraction;
 
-use MMazoni\DataStructure\Stack\Stack;
+use MMazoni\DataStructure\Linear\Stack;
 use OverflowException;
 use UnderflowException;
 

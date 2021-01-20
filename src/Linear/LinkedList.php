@@ -4,12 +4,12 @@ namespace MMazoni\DataStructure\Linear;
 
 class LinkedList implements \Iterator
 {
-    public function __construct(
-        private ?Node $head = null,
-        private int $totalNodes = 0,
-        private ?Node $currentNode = null,
-        private int $currentPosition = 0
-    ) {}
+    private int $totalNodes = 0;
+    private ?Node $currentNode = null;
+    private int $currentPosition = 0;
+
+    public function __construct(private ?Node $head = null)
+    {}
 
     public function insertAtBack($data): void
     {

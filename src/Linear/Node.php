@@ -4,13 +4,11 @@ namespace MMazoni\DataStructure\Linear;
 
 class Node
 {
+    private ?Node $next = null;
+    private ?Node $prev = null;
 
-    public function __construct(
-        private mixed $data = 0,
-        private ?Node $next = null,
-        private ?Node $prev = null
-    ) {
-    }
+    public function __construct(private mixed $data = 0)
+    {}
 
     public function setData(mixed $data): void
     {

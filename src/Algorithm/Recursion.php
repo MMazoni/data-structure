@@ -22,4 +22,12 @@ class Recursion
         }
         return self::fibonacci($number - 1) + self::fibonacci($number - 2);
     }
+
+    public static function greatestCommonDivision(int $a, int $b): int
+    {
+        if ($b === 0)
+            return $a;
+
+        return self::greatestCommonDivision($b, $a % $b);
+    }
 }

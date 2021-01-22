@@ -18,4 +18,11 @@ final class RecursionTest extends TestCase
         $this->assertEquals(0, Recursion::fibonacci(0));
         $this->assertEquals(1, Recursion::fibonacci(1));
     }
+
+    public function testCanGCD(): void
+    {
+        $this->assertEquals(4, Recursion::greatestCommonDivision(20, 24));
+        $this->assertEquals(6, Recursion::greatestCommonDivision(18, 60));
+        $this->assertEquals(16, Recursion::greatestCommonDivision(32, 16));
+    }
 }

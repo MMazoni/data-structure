@@ -30,4 +30,20 @@ class Recursion
 
         return self::greatestCommonDivision($b, $a % $b);
     }
+
+    public static function showFiles(string $dirName, &$allFiles = []): void
+    {
+        $files = scandir($dirName);
+
+        foreach ($files as $key => $value) {
+            $path = realpath($dirName . DIRECTORY_SEPARATOR . $value);
+            if (!is_dir($path)) {
+                $allFiles[] = $path;
+            }
+            if ($value != "." && $value != "..") {
+                self::showFiles($path, $$allFiles);
+                $allFiles[] = $path;
+            }
+        }
+    }
 }

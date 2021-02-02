@@ -35,7 +35,7 @@ class Recursion
     {
         $files = scandir($dirName);
 
-        foreach ($files as $key => $value) {
+        foreach ($files as $value) {
             $path = realpath($dirName . DIRECTORY_SEPARATOR . $value);
             if (!is_dir($path)) {
                 $allFiles[] = $path;

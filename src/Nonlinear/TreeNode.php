@@ -1,5 +1,7 @@
 <?php
 
+namespace MMazoni\DataStructure\Nonlinear;
+
 class TreeNode
 {
     public $children = [];
@@ -7,8 +9,9 @@ class TreeNode
     public function __construct(public ?string $data = null)
     {}
 
-    public function addChildren(TreeNode $node)
+    public function addChildren(TreeNode $node): TreeNode
     {
         $this->children[] = $node;
+        return $node;
     }
 }

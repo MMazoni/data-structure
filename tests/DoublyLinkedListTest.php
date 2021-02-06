@@ -5,7 +5,7 @@ use PHPUnit\Framework\TestCase;
 
 final class DoublyLinkedListTest extends TestCase
 {
-    public function testCanInsertAtBack(): void
+    public function testCanInsertAtBack(): DoublyLinkedList
     {
         $doublyLinkedList = new DoublyLinkedList();
         $doublyLinkedList->insertAtBack(10);
@@ -14,79 +14,107 @@ final class DoublyLinkedListTest extends TestCase
         $doublyLinkedList->insertAtBack(11);
         $this->assertEquals(2, $doublyLinkedList->totalNodes());
         $this->assertEquals(11, $doublyLinkedList->head()->getNext()->getData());
+
+        return $doublyLinkedList;
     }
 
-    public function testCanInsertAtFront(): void
+    /**
+     * @depends testCanInsertAtBack
+     */
+    public function testCanInsertAtFront(DoublyLinkedList $doublyLinkedList): DoublyLinkedList
     {
-        $doublyLinkedList = new DoublyLinkedList();
-        $doublyLinkedList->insertAtBack(3);
-        $doublyLinkedList->insertAtBack(11);
         $doublyLinkedList->insertAtFront('front');
         $this->assertEquals(3, $doublyLinkedList->totalNodes());
         $this->assertEquals('front', $doublyLinkedList->head()->getData());
         $doublyLinkedList->insertAtFront(10);
         $this->assertEquals(4, $doublyLinkedList->totalNodes());
         $this->assertEquals(10, $doublyLinkedList->head()->getData());
+
+        return $doublyLinkedList;
     }
 
-    public function testCanInsertBeforeNode(): void
+    /**
+     * @depends testCanInsertAtFront
+     */
+    public function testCanInsertBeforeNode(DoublyLinkedList $doublyLinkedList): DoublyLinkedList
     {
-        $doublyLinkedList = new DoublyLinkedList();
-        $doublyLinkedList->insertAtBack(3);
-        $doublyLinkedList->insertAtBack(11);
-        $doublyLinkedList->insertAtFront('7');
-        $doublyLinkedList->insertAtFront(10);
         $doublyLinkedList->insertBeforeNode('nou', 11);
         $this->assertEquals(5, $doublyLinkedList->totalNodes());
         $this->assertEquals('nou', $doublyLinkedList->tail()->getPrev()->getData());
+
+        return $doublyLinkedList;
     }
 
-    public function testCanInsertAfterNode(): void
+    /**
+     * @depends testCanInsertBeforeNode
+     */
+    public function testCanInsertAfterNode(DoublyLinkedList $doublyLinkedList): DoublyLinkedList
     {
-        $doublyLinkedList = new DoublyLinkedList();
-        $doublyLinkedList->insertAtBack(3);
-        $doublyLinkedList->insertAtBack(11);
-        $doublyLinkedList->insertAtFront('7');
-        $doublyLinkedList->insertAtFront(10);
         $doublyLinkedList->insertAfterNode('nou', 10);
-        $this->assertEquals(5, $doublyLinkedList->totalNodes());
+        $this->assertEquals(6, $doublyLinkedList->totalNodes());
         $this->assertEquals('nou', $doublyLinkedList->head()->getNext()->getData());
+
+        return $doublyLinkedList;
     }
 
-    public function testCanDeleteFirstNode(): void
+    /**
+     * @depends testCanInsertAfterNode
+     */
+    public function testCanDeleteFirstNode(DoublyLinkedList $doublyLinkedList): DoublyLinkedList
     {
-        $doublyLinkedList = new DoublyLinkedList();
-        $doublyLinkedList->insertAtBack(3);
-        $doublyLinkedList->insertAtBack(11);
-        $doublyLinkedList->insertAtFront('7');
-        $doublyLinkedList->insertAtFront(10);
         $doublyLinkedList->deleteFirstNode();
-        $this->assertEquals(3, $doublyLinkedList->totalNodes());
-        $this->assertEquals(7, $doublyLinkedList->head()->getData());
+        $this->assertEquals(5, $doublyLinkedList->totalNodes());
+        $this->assertEquals('nou', $doublyLinkedList->head()->getData());
+
+        return $doublyLinkedList;
     }
 
-    public function testCanDeleteLastNode(): void
+    /**
+     * @depends testCanDeleteFirstNode
+     */
+    public function testCanDeleteLastNode(DoublyLinkedList $doublyLinkedList): DoublyLinkedList
     {
-        $doublyLinkedList = new DoublyLinkedList();
-        $doublyLinkedList->insertAtBack(3);
-        $doublyLinkedList->insertAtBack(11);
-        $doublyLinkedList->insertAtFront('7');
-        $doublyLinkedList->insertAtFront(10);
         $doublyLinkedList->deleteLastNode();
-        $this->assertEquals(3, $doublyLinkedList->totalNodes());
-        $this->assertEquals(3, $doublyLinkedList->head()
+        $this->assertEquals(4, $doublyLinkedList->totalNodes());
+        $this->assertEquals(10, $doublyLinkedList->head()
             ->getNext()->getNext()->getData());
+
+        return $doublyLinkedList;
     }
 
-    public function testCanDeleteNode(): void
+    /**
+     * @depends testCanDeleteLastNode
+     */
+    public function testCanDeleteNode(DoublyLinkedList $doublyLinkedList): DoublyLinkedList
     {
-        $doublyLinkedList = new DoublyLinkedList();
-        $doublyLinkedList->insertAtBack(3);
-        $doublyLinkedList->insertAtBack(11);
-        $doublyLinkedList->insertAtFront('7');
-        $doublyLinkedList->insertAtFront(10);
-        $this->assertTrue($doublyLinkedList->deleteNode(11));
+        $this->assertTrue($doublyLinkedList->deleteNode('nou'));
         $this->assertEquals(3, $doublyLinkedList->totalNodes());
-        $this->assertEquals(10, $doublyLinkedList->head()->getData());
+        $this->assertEquals('front', $doublyLinkedList->head()->getData());
+
+        return $doublyLinkedList;
     }
+
+    /**
+     * @depends testCanDeleteLastNode
+     */
+    public function testCanDisplayForward(DoublyLinkedList $doublyLinkedList): DoublyLinkedList
+    {
+        $expected = 'Total nodes: 3' . PHP_EOL . 'front' . PHP_EOL . '10' . PHP_EOL . 'nou' . PHP_EOL;
+        $this->expectOutputString($expected);
+        $doublyLinkedList->displayForward();
+
+        return $doublyLinkedList;
+    }
+
+    /**
+     * @depends testCanDisplayForward
+     */
+    public function testCanDisplayBackward(DoublyLinkedList $doublyLinkedList): void
+    {
+        //fix this function
+        $expected = 'Total nodes: 3' . PHP_EOL . 'nou' . PHP_EOL . '10' . PHP_EOL . 'front' . PHP_EOL;
+        $this->expectOutputString($expected);
+        $doublyLinkedList->displayBackward();
+    }
+
 }

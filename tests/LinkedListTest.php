@@ -5,7 +5,7 @@ use PHPUnit\Framework\TestCase;
 
 final class LinkedListTest extends TestCase
 {
-    public function testCanInsertAtBack(): void
+    public function testCanInsertAtBack(): LinkedList
     {
         $linkedList = new LinkedList();
         $linkedList->insertAtBack(10);
@@ -14,144 +14,137 @@ final class LinkedListTest extends TestCase
         $linkedList->insertAtBack(11);
         $this->assertEquals(2, $linkedList->totalNodes());
         $this->assertEquals(11, $linkedList->head()->getNext()->getData());
+
+        return $linkedList;
     }
 
-    public function testCanInsertAtFront(): void
+    /**
+     * @depends testCanInsertAtBack
+     */
+    public function testCanInsertAtFront(LinkedList $linkedList): LinkedList
     {
-        $linkedList = new LinkedList();
-        $linkedList->insertAtBack(3);
-        $linkedList->insertAtBack(11);
         $linkedList->insertAtFront('front');
         $this->assertEquals(3, $linkedList->totalNodes());
         $this->assertEquals('front', $linkedList->head()->getData());
         $linkedList->insertAtFront(10);
         $this->assertEquals(4, $linkedList->totalNodes());
         $this->assertEquals(10, $linkedList->head()->getData());
+
+        return $linkedList;
     }
 
-    public function testCanSearchNode(): void
+    /**
+     * @depends testCanInsertAtFront
+     */
+    public function testCanSearchNode(LinkedList $linkedList): LinkedList
     {
-        $linkedList = new LinkedList();
-        $linkedList->insertAtBack(3);
-        $linkedList->insertAtBack(11);
-        $linkedList->insertAtFront('front');
-        $linkedList->insertAtFront(10);
         $searchedNode = $linkedList->searchNode(10);
-        $this->assertNotFalse($linkedList->searchNode(10));
+        $this->assertNotFalse($searchedNode);
         $this->assertEquals(10, $searchedNode->getData());
+
+        return $linkedList;
     }
 
-    public function testCanInsertBeforeNode(): void
+    /**
+     * @depends testCanSearchNode
+     */
+    public function testCanInsertBeforeNode(LinkedList $linkedList): LinkedList
     {
-        $linkedList = new LinkedList();
-        $linkedList->insertAtBack(3);
-        $linkedList->insertAtBack(11);
-        $linkedList->insertAtFront('7');
-        $linkedList->insertAtFront(10);
         $linkedList->insertBeforeNode('nou', 11);
         $this->assertEquals(5, $linkedList->totalNodes());
         $searchedNode = $linkedList->searchNode('nou');
         $this->assertEquals(11, $searchedNode->getNext()->getData());
+
+        return $linkedList;
     }
 
-    public function testCanInsertAfterNode(): void
+    /**
+     * @depends testCanInsertBeforeNode
+     */
+    public function testCanInsertAfterNode(LinkedList $linkedList): LinkedList
     {
-        $linkedList = new LinkedList();
-        $linkedList->insertAtBack(3);
-        $linkedList->insertAtBack(11);
-        $linkedList->insertAtFront('7');
-        $linkedList->insertAtFront(10);
-        $linkedList->insertAfterNode('nou', 10);
-        $this->assertEquals(5, $linkedList->totalNodes());
-        $searchedNode = $linkedList->searchNode(10);
-        $this->assertEquals('nou', $searchedNode->getNext()->getData());
+        $linkedList->insertAfterNode('ryu', 'nou');
+        $this->assertEquals(6, $linkedList->totalNodes());
+        $searchedNode = $linkedList->searchNode('nou');
+        $this->assertEquals('ryu', $searchedNode->getNext()->getData());
+
+        return $linkedList;
     }
 
-    public function testCanDeleteFirstNode(): void
+    /**
+     * @depends testCanInsertAfterNode
+     */
+    public function testCanDeleteFirstNode(LinkedList $linkedList): LinkedList
     {
-        $linkedList = new LinkedList();
-        $linkedList->insertAtBack(3);
-        $linkedList->insertAtBack(11);
-        $linkedList->insertAtFront('7');
-        $linkedList->insertAtFront(10);
         $linkedList->deleteFirstNode();
-        $this->assertEquals(3, $linkedList->totalNodes());
-        $this->assertEquals(7, $linkedList->head()->getData());
+        $this->assertEquals(5, $linkedList->totalNodes());
+        $this->assertEquals('front', $linkedList->head()->getData());
+
+        return $linkedList;
     }
 
-    public function testCanDeleteLastNode(): void
+    /**
+     * @depends testCanDeleteFirstNode
+     */
+    public function testCanDeleteLastNode(LinkedList $linkedList): LinkedList
     {
-        $linkedList = new LinkedList();
-        $linkedList->insertAtBack(3);
-        $linkedList->insertAtBack(11);
-        $linkedList->insertAtFront('7');
-        $linkedList->insertAtFront(10);
         $linkedList->deleteLastNode();
-        $this->assertEquals(3, $linkedList->totalNodes());
-        $this->assertEquals(3, $linkedList->head()
-            ->getNext()->getNext()->getData());
-    }
-
-    public function testCanDeleteNode(): void
-    {
-        $linkedList = new LinkedList();
-        $linkedList->insertAtBack(3);
-        $linkedList->insertAtBack(11);
-        $linkedList->insertAtFront('7');
-        $linkedList->insertAtFront(10);
-        $this->assertTrue($linkedList->deleteNode(11));
-        $this->assertEquals(3, $linkedList->totalNodes());
-        $this->assertEquals(10, $linkedList->head()->getData());
-    }
-
-    public function testCanReverseList(): void
-    {
-        $linkedList = new LinkedList();
-        $linkedList->insertAtBack(3);
-        $linkedList->insertAtBack(11);
-        $linkedList->insertAtFront('7');
-        $linkedList->insertAtFront(10);
-        $linkedList->reverse();
-        $this->assertEquals(11, $linkedList->head()->getData());
-        $this->assertEquals(3, $linkedList->head()
-            ->getNext()->getData());
-        $this->assertEquals(7, $linkedList->head()
-            ->getNext()->getNext()->getData());
-        $this->assertEquals(10, $linkedList->head()
+        $this->assertEquals(4, $linkedList->totalNodes());
+        $this->assertEquals('ryu', $linkedList->head()
             ->getNext()->getNext()->getNext()->getData());
+
+        return $linkedList;
     }
 
-    public function testCanGetNthNode(): void
+    /**
+     * @depends testCanDeleteLastNode
+     */
+    public function testCanDeleteNode(LinkedList $linkedList): LinkedList
     {
-        $linkedList = new LinkedList();
-        $linkedList->insertAtBack(3);
-        $linkedList->insertAtBack(11);
-        $linkedList->insertAtFront('7');
-        $linkedList->insertAtFront(10);
-        $this->assertEquals(10, $linkedList->getNthNode(1)->getData());
-        $this->assertEquals(3, $linkedList->getNthNode(3)->getData());
+        $this->assertTrue($linkedList->deleteNode('front'));
+        $this->assertEquals(3, $linkedList->totalNodes());
+        $this->assertEquals('front', $linkedList->head()->getData());
+
+        return $linkedList;
     }
 
-    public function testCanIterate(): void
+    /**
+     * @depends testCanDeleteNode
+     */
+    public function testCanReverseList(LinkedList $linkedList): LinkedList
     {
-        $linkedList = new LinkedList();
-        $linkedList->insertAtBack(3);
-        $linkedList->insertAtBack(11);
-        $linkedList->insertAtFront('7');
-        $linkedList->insertAtFront(10);
+        $linkedList->reverse();
+        $this->assertEquals('ryu', $linkedList->head()->getData());
+        $this->assertEquals('nou', $linkedList->head()
+            ->getNext()->getData());
+        $this->assertEquals(10, $linkedList->head()
+            ->getNext()->getNext()->getData());
+        $this->assertEquals('front', $linkedList->head()
+            ->getNext()->getNext()->getNext()->getData());
+
+        return $linkedList;
+    }
+
+    /**
+     * @depends testCanReverseList
+     */
+    public function testCanGetNthNode(LinkedList $linkedList): LinkedList
+    {
+        $this->assertEquals('ryu', $linkedList->getNthNode(1)->getData());
+        $this->assertEquals(10, $linkedList->getNthNode(3)->getData());
+
+        return $linkedList;
+    }
+
+    /**
+     * @depends testCanGetNthNode
+     */
+    public function testCanIterate(LinkedList $linkedList): void
+    {
+        $expected = '0 - ryu' . PHP_EOL . '1 - nou' . PHP_EOL . '2 - 10' . PHP_EOL . '3 - front' . PHP_EOL;
+        $this->expectOutputString($expected);
         foreach ($linkedList as $key => $item) {
-            if ($key === 0) {
-                $this->assertEquals(10, $item);
-            }
-            if ($key === 1) {
-                $this->assertEquals('7', $item);
-            }
-            if ($key === 2) {
-                $this->assertEquals(3, $item);
-            }
-            if ($key === 3) {
-                $this->assertEquals(11, $item);
-            }
+            echo $key . ' - ' . $item . PHP_EOL;
         }
     }
 }

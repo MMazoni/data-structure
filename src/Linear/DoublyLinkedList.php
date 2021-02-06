@@ -88,6 +88,10 @@ class DoublyLinkedList
                     if ($nextNode !== null) {
                         $newNode->setNext($nextNode);
                     }
+                    if ($this->head->getData() === $query) {
+                        $nextNode = $currentNode->getNext();
+                        $newNode->setNext($nextNode);
+                    }
                     if ($currentNode === $this->tail) {
                         $this->tail = $newNode;
                     }
@@ -143,11 +147,15 @@ class DoublyLinkedList
             $currentNode = $this->head;
             while ($currentNode !== null) {
                 if ($currentNode->getData() === $query) {
-                    if ($currentNode->getNext() === null) {
-                        $previous?->setNext(null);
-                    } else {
-                        $previous?->setNext($currentNode->getNext());
+                    if ($currentNode->getNext() === null && !is_null($previous)) {
+                        $previous->setNext(null);
+                    }
+                    if ($currentNode->getNext() !== null && !is_null($previous)) {
+                        $previous->setNext($currentNode->getNext());
                         $currentNode->getNext()->setPrev($previous);
+                    }
+                    if ($this->head->getData() === $query) {
+                        $this->head = $currentNode->getNext();
                     }
                     $this->totalNodes--;
                     return true;

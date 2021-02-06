@@ -156,10 +156,14 @@ class LinkedList implements \Iterator
             $currentNode = $this->head;
             while ($currentNode !== null) {
                 if ($currentNode->getData() === $query) {
-                    if ($currentNode->getNext() === null) {
-                        $previous?->setNext(null);
-                    } else {
-                        $previous?->setNext($currentNode->getNext());
+                    if ($currentNode->getNext() === null && !is_null($previous)) {
+                        $previous->setNext(null);
+                    }
+                    if ($currentNode->getNext() !== null && !is_null($previous)) {
+                        $previous->setNext($currentNode->getNext());
+                    }
+                    if ($this->head->getData() === $query) {
+                        $this->head = $currentNode->getNext();
                     }
                     $this->totalNodes--;
                     return true;

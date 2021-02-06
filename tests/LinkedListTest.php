@@ -102,8 +102,9 @@ final class LinkedListTest extends TestCase
     public function testCanDeleteNode(LinkedList $linkedList): LinkedList
     {
         $this->assertTrue($linkedList->deleteNode('front'));
+        $this->assertFalse($linkedList->searchNode('front'));
         $this->assertEquals(3, $linkedList->totalNodes());
-        $this->assertEquals('front', $linkedList->head()->getData());
+        $this->assertEquals(10, $linkedList->head()->getData());
 
         return $linkedList;
     }
@@ -119,8 +120,6 @@ final class LinkedListTest extends TestCase
             ->getNext()->getData());
         $this->assertEquals(10, $linkedList->head()
             ->getNext()->getNext()->getData());
-        $this->assertEquals('front', $linkedList->head()
-            ->getNext()->getNext()->getNext()->getData());
 
         return $linkedList;
     }
@@ -141,7 +140,7 @@ final class LinkedListTest extends TestCase
      */
     public function testCanIterate(LinkedList $linkedList): void
     {
-        $expected = '0 - ryu' . PHP_EOL . '1 - nou' . PHP_EOL . '2 - 10' . PHP_EOL . '3 - front' . PHP_EOL;
+        $expected = '0 - ryu' . PHP_EOL . '1 - nou' . PHP_EOL . '2 - 10' . PHP_EOL;
         $this->expectOutputString($expected);
         foreach ($linkedList as $key => $item) {
             echo $key . ' - ' . $item . PHP_EOL;

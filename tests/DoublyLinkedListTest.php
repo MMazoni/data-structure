@@ -85,25 +85,11 @@ final class DoublyLinkedListTest extends TestCase
     /**
      * @depends testCanDeleteLastNode
      */
-    public function testCanDeleteNode(DoublyLinkedList $doublyLinkedList): DoublyLinkedList
+    public function testCanDeleteNode(DoublyLinkedList $doublyLinkedList): void
     {
         $this->assertTrue($doublyLinkedList->deleteNode('nou'));
         $this->assertEquals(3, $doublyLinkedList->totalNodes());
         $this->assertEquals('front', $doublyLinkedList->head()->getData());
-
-        return $doublyLinkedList;
-    }
-
-    /**
-     * @depends testCanDeleteLastNode
-     */
-    public function testCanDisplayForward(DoublyLinkedList $doublyLinkedList): DoublyLinkedList
-    {
-        $expected = 'Total nodes: 3' . PHP_EOL . 'front' . PHP_EOL . '10' . PHP_EOL . 'nou' . PHP_EOL;
-        $this->expectOutputString($expected);
-        $doublyLinkedList->displayForward();
-
-        return $doublyLinkedList;
     }
 
     /**

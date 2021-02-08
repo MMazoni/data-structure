@@ -156,6 +156,11 @@ class DoublyLinkedList
                     }
                     if ($this->head->getData() === $query) {
                         $this->head = $currentNode->getNext();
+                        $this->head->setPrev(null);
+                    }
+                    if ($this->tail->getData() === $query) {
+                        $this->tail = $currentNode->getNext();
+                        $this->tail->setNext(null);
                     }
                     $this->totalNodes--;
                     return true;

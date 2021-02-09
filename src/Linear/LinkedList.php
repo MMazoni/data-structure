@@ -132,9 +132,11 @@ class LinkedList implements \Iterator
     {
         if ($this->head !== null) {
             $currentNode = $this->head;
-            if ($currentNode->getNext() === null) {
+            if ($currentNode->getNext() === null && $this->totalNodes > 1) {
                 $this->head = null;
-            } else {
+                return false;
+            }
+            if ($currentNode->getNext() !== null) {
                 $previousNode = null;
                 while ($currentNode->getNext() !== null) {
                     $previousNode = $currentNode;
@@ -142,11 +144,14 @@ class LinkedList implements \Iterator
                 }
 
                 $previousNode->setNext(null);
-                $this->totalNodes--;
-                return true;
             }
+            if ($currentNode->getNext() === null && $this->totalNodes === 1) {
+                $this->head = null;
+            }
+
+            $this->totalNodes--;
+            return true;
         }
-        return false;
     }
 
     public function deleteNode(mixed $query = null): bool

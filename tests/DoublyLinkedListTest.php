@@ -109,7 +109,6 @@ final class DoublyLinkedListTest extends TestCase
      */
     public function testCanDisplayBackward(DoublyLinkedList $doublyLinkedList): void
     {
-        //fix this function
         $expected = 'Total nodes: 3' . PHP_EOL . 'nou' . PHP_EOL . '10' . PHP_EOL . 'front' . PHP_EOL;
         $this->expectOutputString($expected);
         $doublyLinkedList->displayBackward();

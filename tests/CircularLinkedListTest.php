@@ -5,7 +5,7 @@ use PHPUnit\Framework\TestCase;
 
 final class CircularLinkedListTest extends TestCase
 {
-    public function testCanInsertAtBack(): void
+    public function testCanInsertAtBack(): CircularLinkedList
     {
         $circular = new CircularLinkedList();
         $circular->insertAtBack(10);
@@ -14,5 +14,17 @@ final class CircularLinkedListTest extends TestCase
         $circular->insertAtBack(11);
         $this->assertEquals(2, $circular->totalNodes());
         $this->assertEquals(11, $circular->head()->getNext()->getData());
+
+        return $circular;
+    }
+
+    /**
+     * @depends testCanInsertAtBack
+     */
+    public function testCanDisplay(CircularLinkedList $circular): void
+    {
+        $expected = 'Total nodes: 2' . PHP_EOL . '10' . PHP_EOL . '11' . PHP_EOL;
+        $this->expectOutputString($expected);
+        $circular->display();
     }
 }

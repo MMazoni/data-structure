@@ -5,16 +5,20 @@ use PHPUnit\Framework\TestCase;
 
 final class StackLinkedListTest extends TestCase
 {
-    public function testCanPushAndPopItem(): void
+    public function testCanPushAndPopItem(): BooksList
     {
         $stack = new BooksList();
         $stack->push('The art of war');
         $this->assertEquals('The art of war', $stack->pop());
+
+        return $stack;
     }
 
-    public function testCanHaveTop(): void
+    /**
+     * @depends testCanPushAndPopItem
+     */
+    public function testCanHaveTop(BooksList $stack): void
     {
-        $stack = new BooksList();
         $stack->push('The Lord of Rings');
         $stack->push('14 Habits of Highly Productive Developers');
         $stack->push('Atomic Habits');

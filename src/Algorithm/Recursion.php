@@ -31,8 +31,11 @@ class Recursion
         return self::greatestCommonDivision($b, $a % $b);
     }
 
-    public static function showFiles(string $dirName, &$allFiles = []): void
+    public static function showFiles(string $dirName, array &$allFiles = []): void
     {
+        if (str_contains($dirName, '.php'))
+            return;
+
         $files = scandir($dirName);
 
         foreach ($files as $value) {
@@ -41,7 +44,7 @@ class Recursion
                 $allFiles[] = $path;
             }
             if ($value != "." && $value != "..") {
-                self::showFiles($path, $$allFiles);
+                self::showFiles($path, $allFiles);
                 $allFiles[] = $path;
             }
         }

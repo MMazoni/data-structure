@@ -6,7 +6,7 @@ require __DIR__ . "/vendor/autoload.php";
 
 $files = array();
 
-Recursion::showFiles("~/projects/php/data-structure", $files);
+Recursion::showFiles("./src/Abstraction", $files);
 
 foreach($files as $file) {
     echo $file."\n";

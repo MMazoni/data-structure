@@ -36,15 +36,15 @@ final class TreeTest extends TestCase
      */
     public function testTreeCanTraverse(Tree $tree): Tree
     {
-        $expected = 'CEO
--CTO
---Senior Architect
----Software Engineer
---Quality Assurance Engineer
---User Interface Designer
--CFO
--CMO
--COO'.PHP_EOL;
+        $expected = 'CEO' . PHP_EOL .
+                    '-CTO' . PHP_EOL .
+                    '--Senior Architect' . PHP_EOL .
+                    '---Software Engineer' . PHP_EOL .
+                    '--Quality Assurance Engineer' . PHP_EOL .
+                    '--User Interface Designer' . PHP_EOL .
+                    '-CFO' . PHP_EOL .
+                    '-CMO' . PHP_EOL .
+                    '-COO' . PHP_EOL;
         $this->expectOutputString($expected);
         $tree->traverse($tree->root);
         return $tree;

@@ -5,16 +5,20 @@ use PHPUnit\Framework\TestCase;
 
 final class StackArrayTest extends TestCase
 {
-    public function testCanPushAndPopItem(): void
+    public function testCanPushAndPopItem(): BooksList
     {
         $stack = new BooksList();
         $stack->push('The code book');
         $this->assertEquals('The code book', $stack->pop());
+
+        return $stack;
     }
 
-    public function testCanHaveTop(): void
+    /**
+     * @depends testCanPushAndPopItem
+     */
+    public function testCanHaveTop(BooksList $stack): void
     {
-        $stack = new BooksList();
         $stack->push('The Life-Changing Magic of Tidying Up');
         $stack->push('Scrum');
         $stack->push('Japanese Fairy Tales');

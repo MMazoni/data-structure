@@ -152,15 +152,15 @@ class DoublyLinkedList
                     }
                     if ($currentNode->getNext() !== null && !is_null($previous)) {
                         $previous->setNext($currentNode->getNext());
-                        $currentNode->getNext()->setPrev($previous);
+                        $currentNode->getNext()?->setPrev($previous);
                     }
                     if ($this->head->getData() === $query) {
                         $this->head = $currentNode->getNext();
-                        $this->head->setPrev(null);
+                        $this->head?->setPrev(null);
                     }
-                    if ($this->tail->getData() === $query && $currentNode->getData() !== $query) {
+                    if ($this->tail?->getData() === $query && $currentNode->getData() !== $query) {
                         $this->tail = $currentNode->getNext();
-                        $this->tail->setNext(null);
+                        $this->tail?->setNext(null);
                     }
                     $this->totalNodes--;
                     return true;

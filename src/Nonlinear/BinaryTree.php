@@ -4,13 +4,14 @@ namespace MMazoni\DataStructure\Nonlinear;
 
 class BinaryTree
 {
-    public $root = null;
+    public ?BinaryNode $root = null;
 
-    public function __construct(BinaryNode $node) {
+    public function __construct(BinaryNode $node)
+    {
         $this->root = $node;
     }
 
-    public function traverse(BinaryNode $node, int $level = 0): bool
+    public function traverse(?BinaryNode $node, int $level = 0): bool
     {
         if ($node) {
             echo str_repeat('-', $level);

@@ -6,7 +6,8 @@ class BinarySearchTree
 {
     public ?Node $root = null;
 
-    public function __construct(int $data) {
+    public function __construct(int $data)
+    {
         $this->root = new Node($data);
     }
 
@@ -15,7 +16,7 @@ class BinarySearchTree
         return $this->root === null;
     }
 
-    public function insert(int $data): Node
+    public function insert(int $data): ?Node
     {
         if ($this->isEmpty()) {
             $node = new Node($data);
@@ -48,14 +49,12 @@ class BinarySearchTree
         return $node;
     }
 
-    public function traverse(Node $node): void
+    public function traverse(?Node $node): void
     {
-        if ($node) {
-            if ($node->left)
-                $this->traverse($node->left);
-            echo $node->data . PHP_EOL;
-            if ($node->right)
-                $this->traverse($node->right);
-        }
+        if ($node->left)
+            $this->traverse($node->left);
+        echo $node->data . PHP_EOL;
+        if ($node->right)
+            $this->traverse($node->right);
     }
 }

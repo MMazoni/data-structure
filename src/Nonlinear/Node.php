@@ -31,7 +31,7 @@ class Node
         return $node;
     }
 
-    public function sucessor(): Node
+    public function successor(): ?Node
     {
         $node = $this;
         if ($node->right)
@@ -40,7 +40,7 @@ class Node
         return null;
     }
 
-    public function predecessor(): Node
+    public function predecessor(): ?Node
     {
         $node = $this;
         if ($node->left)

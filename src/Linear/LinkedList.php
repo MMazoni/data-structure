@@ -11,7 +11,7 @@ class LinkedList implements \Iterator
     public function __construct(private ?Node $head = null)
     {}
 
-    public function insertAtBack($data): void
+    public function insertAtBack(mixed $data): void
     {
         $newNode = new Node($data);
 
@@ -19,15 +19,15 @@ class LinkedList implements \Iterator
             $this->head = &$newNode;
         } else {
             $currentNode = $this->head;
-            while ($currentNode->getNext() !== null) {
-                $currentNode = $currentNode->getNext();
+            while ($currentNode?->getNext() !== null) {
+                $currentNode = $currentNode?->getNext();
             }
-            $currentNode->setNext($newNode);
+            $currentNode?->setNext($newNode);
         }
         $this->totalNodes++;
     }
 
-    public function insertAtFront($data): void
+    public function insertAtFront(mixed $data): void
     {
         $newNode = new Node($data);
         if ($this->head === null) {
@@ -40,7 +40,7 @@ class LinkedList implements \Iterator
         $this->totalNodes++;
     }
 
-    public function display()
+    public function display(): void
     {
         echo "Total nodes: {$this->totalNodes}" . PHP_EOL;
         $currentNode = $this->head;
@@ -50,7 +50,7 @@ class LinkedList implements \Iterator
         }
     }
 
-    public function searchNode($data): mixed
+    public function searchNode(mixed $data): Node|bool
     {
         if ($this->head) {
             $currentNode = $this->head;
@@ -74,7 +74,7 @@ class LinkedList implements \Iterator
         return $this->totalNodes;
     }
 
-    public function insertBeforeNode($data = null, $query = null): void
+    public function insertBeforeNode(mixed $data = null, mixed $query = null): void
     {
         $newNode = new Node($data);
         if ($this->head) {
@@ -93,7 +93,7 @@ class LinkedList implements \Iterator
         }
     }
 
-    public function insertAfterNode($data = null, $query = null): void
+    public function insertAfterNode(mixed $data = null, mixed $query = null): void
     {
         $newNode = new Node($data);
         if ($this->head) {
@@ -109,7 +109,7 @@ class LinkedList implements \Iterator
                     break;
                 }
                 $currentNode = $currentNode->getNext();
-                $nextNode = $currentNode->getNext();
+                $nextNode = $currentNode?->getNext();
             }
         }
     }
@@ -138,20 +138,21 @@ class LinkedList implements \Iterator
             }
             if ($currentNode->getNext() !== null) {
                 $previousNode = null;
-                while ($currentNode->getNext() !== null) {
+                while ($currentNode?->getNext() !== null) {
                     $previousNode = $currentNode;
-                    $currentNode = $currentNode->getNext();
+                    $currentNode = $currentNode?->getNext();
                 }
 
-                $previousNode->setNext(null);
+                $previousNode?->setNext(null);
             }
-            if ($currentNode->getNext() === null && $this->totalNodes === 1) {
+            if ($currentNode?->getNext() === null && $this->totalNodes === 1) {
                 $this->head = null;
             }
 
             $this->totalNodes--;
             return true;
         }
+        return false;
     }
 
     public function deleteNode(mixed $query = null): bool
@@ -214,25 +215,32 @@ class LinkedList implements \Iterator
         return null;
     }
 
-    public function current() {
-        return $this->currentNode->getData();
+    // Iterator interface implementation methods
+
+    public function current()
+    {
+        return $this->currentNode?->getData();
     }
 
-    public function next() {
+    public function next()
+    {
         $this->currentPosition++;
-        $this->currentNode = $this->currentNode->getNext();
+        $this->currentNode = $this->currentNode?->getNext();
     }
 
-    public function key() {
+    public function key()
+    {
         return $this->currentPosition;
     }
 
-    public function rewind() {
+    public function rewind()
+    {
         $this->currentPosition = 0;
         $this->currentNode = $this->head;
     }
 
-    public function valid() {
+    public function valid()
+    {
         return $this->currentNode !== null;
     }
 }

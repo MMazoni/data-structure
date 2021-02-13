@@ -4,8 +4,8 @@ namespace MMazoni\DataStructure\Linear;
 
 class CircularQueue implements Queue
 {
-    private $front = 0;
-    private $rear = 0;
+    private int $front = 0;
+    private int $rear = 0;
 
     public function __construct(
         private int $limit = 5,
@@ -59,5 +59,4 @@ class CircularQueue implements Queue
     {
       return $this->queue[$this->front];
     }
-
 }

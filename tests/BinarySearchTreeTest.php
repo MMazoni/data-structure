@@ -2,7 +2,6 @@
 
 use PHPUnit\Framework\TestCase;
 use MMazoni\DataStructure\Nonlinear\BinarySearchTree;
-use MMazoni\DataStructure\Nonlinear\Node;
 
 final class BinarySearchTreeTest extends TestCase
 {

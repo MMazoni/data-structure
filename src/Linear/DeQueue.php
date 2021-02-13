@@ -63,5 +63,4 @@ class DeQueue
     {
         return $this->queue->totalNodes() == 0;
     }
-
 }

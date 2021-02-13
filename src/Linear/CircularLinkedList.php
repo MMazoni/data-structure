@@ -10,7 +10,7 @@ class CircularLinkedList
     )
     {}
 
-    public function insertAtBack($data): void
+    public function insertAtBack(mixed $data): void
     {
         $newNode = new Node($data);
 
@@ -18,22 +18,22 @@ class CircularLinkedList
             $this->head = &$newNode;
         } else {
             $currentNode = $this->head;
-            while ($currentNode->getNext() !== $this->head) {
-                $currentNode = $currentNode->getNext();
+            while ($currentNode?->getNext() !== $this->head) {
+                $currentNode = $currentNode?->getNext();
             }
-            $currentNode->setNext($newNode);
+            $currentNode?->setNext($newNode);
         }
         $newNode->setNext($this->head);
         $this->totalNodes++;
     }
 
-    public function display()
+    public function display(): void
     {
         echo "Total nodes: {$this->totalNodes}" . PHP_EOL;
         $currentNode = $this->head;
-        while ($currentNode->getNext() !== $this->head) {
-            echo $currentNode->getData() . PHP_EOL;
-            $currentNode = $currentNode->getNext();
+        while ($currentNode?->getNext() !== $this->head) {
+            echo $currentNode?->getData() . PHP_EOL;
+            $currentNode = $currentNode?->getNext();
         }
         if ($currentNode) {
             echo $currentNode->getData() . PHP_EOL;

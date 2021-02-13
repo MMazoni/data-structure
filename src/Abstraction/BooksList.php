@@ -15,7 +15,7 @@ class BooksList implements Stack
         $this->stack = new LinkedList();
     }
 
-    public function pop(): string
+    public function pop(): ?string
     {
         if ($this->isEmpty() === true) {
             throw new UnderflowException('Stack is empty');
@@ -30,9 +30,9 @@ class BooksList implements Stack
         $this->stack->insertAtBack($newItem);
     }
 
-    public function top(): string
+    public function top(): ?string
     {
-        return $this->stack->getNthNode($this->stack->totalNodes())->getData();
+        return $this->stack->getNthNode($this->stack->totalNodes())?->getData();
     }
 
     public function isEmpty(): bool

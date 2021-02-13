@@ -5,15 +5,15 @@ namespace MMazoni\DataStructure\Nonlinear;
 class Tree
 {
 
-    public $root = NULL;
+    public ?TreeNode $root = null;
     public function __construct(TreeNode $node)
     {
         $this->root = $node;
     }
 
-    public function traverse(TreeNode $node, int $level = 0): bool
+    public function traverse(?TreeNode $node, int $level = 0): bool
     {
-        if ($node) {
+        if ($node && $node->data && $node->children) {
             echo str_repeat("-", $level);
             echo $node->data . "\n";
 

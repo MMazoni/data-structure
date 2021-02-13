@@ -11,7 +11,7 @@ class DoublyLinkedList
     )
     {}
 
-    public function insertAtFront($data): void
+    public function insertAtFront(mixed $data): void
     {
         $newNode = new Node($data);
         if ($this->head === null) {
@@ -34,7 +34,7 @@ class DoublyLinkedList
             $this->tail = $newNode;
         } else {
             $currentNode = $this->tail;
-            $currentNode->setNext($newNode);
+            $currentNode?->setNext($newNode);
             $newNode->setPrev($currentNode);
             $this->tail = $newNode;
         }
@@ -56,7 +56,7 @@ class DoublyLinkedList
         return $this->totalNodes;
     }
 
-    public function insertBeforeNode($data = null, $query = null): void
+    public function insertBeforeNode(mixed $data = null, mixed $query = null): void
     {
         $newNode = new Node($data);
         if ($this->head) {
@@ -77,7 +77,7 @@ class DoublyLinkedList
         }
     }
 
-    public function insertAfterNode($data = null, $query = null): void
+    public function insertAfterNode(mixed $data = null, mixed $query = null): void
     {
         $newNode = new Node($data);
         if ($this->head) {
@@ -102,7 +102,7 @@ class DoublyLinkedList
                     break;
                 }
                 $currentNode = $currentNode->getNext();
-                $nextNode = $currentNode->getNext();
+                $nextNode = $currentNode?->getNext();
             }
         }
     }
@@ -112,7 +112,7 @@ class DoublyLinkedList
         if ($this->head) {
             if ($this->head->getNext() !== null) {
                 $this->head = $this->head->getNext();
-                $this->head->setPrev(null);
+                $this->head?->setPrev(null);
             } else {
                 $this->head = null;
             }
@@ -132,7 +132,7 @@ class DoublyLinkedList
             } else {
                 $previousNode = $currentNode->getPrev();
                 $this->tail = $previousNode;
-                $previousNode->setNext(null);
+                $previousNode?->setNext(null);
                 $this->totalNodes--;
                 return true;
             }

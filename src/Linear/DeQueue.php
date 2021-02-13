@@ -13,7 +13,7 @@ class DeQueue
         $this->queue = new LinkedList();
     }
 
-    public function dequeueFromFront(): string
+    public function dequeueFromFront(): ?string
     {
         if ($this->isEmpty()) {
             throw new \UnderflowException('Queue is empty');
@@ -23,7 +23,7 @@ class DeQueue
         return $lastItem;
     }
 
-    public function dequeueFromBack(): string
+    public function dequeueFromBack(): ?string
     {
         if ($this->isEmpty()) {
             throw new \UnderflowException('Queue is empty');
@@ -41,7 +41,7 @@ class DeQueue
         $this->queue->insertAtBack($newItem);
     }
 
-    public function enqueueAtFront(string $newItem)
+    public function enqueueAtFront(string $newItem): void
     {
         if ($this->queue->totalNodes() >= $this->limit) {
             throw new \OverflowException('Queue is full');
@@ -49,14 +49,14 @@ class DeQueue
         $this->queue->insertAtFront($newItem);
     }
 
-    public function peekFront(): string
+    public function peekFront(): ?string
     {
-        return $this->queue->getNthNode(1)->getData();
+        return $this->queue->getNthNode(1)?->getData();
     }
 
-    public function peekBack(): string
+    public function peekBack(): ?string
     {
-        return $this->queue->getNthNode($this->queue->totalNodes())->getData();
+        return $this->queue->getNthNode($this->queue->totalNodes())?->getData();
     }
 
     public function isEmpty(): bool

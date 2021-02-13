@@ -49,12 +49,17 @@ class BinarySearchTree
         return $node;
     }
 
-    public function traverse(?Node $node): void
+    public function traverse(?Node $node): bool
     {
-        if ($node->left)
-            $this->traverse($node->left);
-        echo $node->data . PHP_EOL;
-        if ($node->right)
-            $this->traverse($node->right);
+        if ($node) {
+            if ($node->left)
+                $this->traverse($node->left);
+            echo $node->data . PHP_EOL;
+            if ($node->right)
+                $this->traverse($node->right);
+
+            return true;
+        }
+        return false;
     }
 }

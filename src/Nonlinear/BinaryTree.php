@@ -17,8 +17,9 @@ class BinaryTree
             echo str_repeat('-', $level);
             echo $node->data . PHP_EOL;
 
-            if ($node->left)
+            if ($node->left) {
                 $this->traverse($node->left, $level + 1);
+            }
 
             if ($node->right) {
                 $this->traverse($node->right, $level + 1);

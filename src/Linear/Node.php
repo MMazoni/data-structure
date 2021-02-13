@@ -8,7 +8,8 @@ class Node
     private ?Node $prev = null;
 
     public function __construct(private mixed $data = 0)
-    {}
+    {
+    }
 
     public function setData(mixed $data): void
     {

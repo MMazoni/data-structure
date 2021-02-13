@@ -8,11 +8,9 @@ use UnderflowException;
 
 class Books implements Stack
 {
-    public function __construct(
-        private int $limit = 20,
-        private array $stack = []
-    )
-    {}
+    public function __construct(private int $limit = 20, private array $stack = [])
+    {
+    }
 
     public function pop(): string
     {

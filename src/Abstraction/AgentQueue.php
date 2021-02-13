@@ -7,7 +7,8 @@ use MMazoni\DataStructure\Linear\Queue;
 class AgentQueue implements Queue
 {
     public function __construct(private int $limit = 20, private array $queue = [])
-    {}
+    {
+    }
 
     public function dequeue(): string
     {

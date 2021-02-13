@@ -9,7 +9,8 @@ class DeQueue
 
     private LinkedList $queue;
 
-    public function __construct(private int $limit = 20) {
+    public function __construct(private int $limit = 20)
+    {
         $this->queue = new LinkedList();
     }
 

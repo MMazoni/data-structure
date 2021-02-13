@@ -27,17 +27,17 @@ class BinarySearchTree
         $node = $this->root;
         while ($node) {
             if ($data > $node->data) {
-                if ($node->right)
+                if ($node->right) {
                     $node = $node->right;
-                else {
+                } else {
                     $node->right = new Node($data);
                     $node = $node->right;
                     break;
                 }
             } elseif ($data < $node->data) {
-                if ($node->left)
+                if ($node->left) {
                     $node = $node->left;
-                else {
+                } else {
                     $node->left = new Node($data);
                     $node = $node->left;
                     break;
@@ -52,11 +52,13 @@ class BinarySearchTree
     public function traverse(?Node $node): bool
     {
         if ($node) {
-            if ($node->left)
+            if ($node->left) {
                 $this->traverse($node->left);
+            }
             echo $node->data . PHP_EOL;
-            if ($node->right)
+            if ($node->right) {
                 $this->traverse($node->right);
+            }
 
             return true;
         }

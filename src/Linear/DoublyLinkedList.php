@@ -4,12 +4,9 @@ namespace MMazoni\DataStructure\Linear;
 
 class DoublyLinkedList
 {
-    public function __construct(
-        private ?Node $head = null,
-        private ?Node $tail = null,
-        private int $totalNodes = 0
-    )
-    {}
+    public function __construct(private ?Node $head = null, private ?Node $tail = null, private int $totalNodes = 0)
+    {
+    }
 
     public function insertAtFront(mixed $data): void
     {

@@ -25,16 +25,18 @@ class Recursion
 
     public static function greatestCommonDivision(int $a, int $b): int
     {
-        if ($b === 0)
+        if ($b === 0) {
             return $a;
+        }
 
         return self::greatestCommonDivision($b, $a % $b);
     }
 
     public static function showFiles(string $dirName, array &$allFiles = []): void
     {
-        if (str_contains($dirName, '.php'))
+        if (str_contains($dirName, '.php')) {
             return;
+        }
 
         $files = scandir($dirName);
 

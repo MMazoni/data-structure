@@ -9,7 +9,8 @@ class LinkedList implements \Iterator
     private int $currentPosition = 0;
 
     public function __construct(private ?Node $head = null)
-    {}
+    {
+    }
 
     public function insertAtBack(mixed $data): void
     {
@@ -50,7 +51,7 @@ class LinkedList implements \Iterator
         }
     }
 
-    public function searchNode(mixed $data): Node|bool
+    public function searchNode(mixed $data): Node | bool
     {
         if ($this->head) {
             $currentNode = $this->head;

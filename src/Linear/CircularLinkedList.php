@@ -4,11 +4,9 @@ namespace MMazoni\DataStructure\Linear;
 
 class CircularLinkedList
 {
-    public function __construct(
-        private ?Node $head = null,
-        private int $totalNodes = 0
-    )
-    {}
+    public function __construct(private ?Node $head = null, private int $totalNodes = 0)
+    {
+    }
 
     public function insertAtBack(mixed $data): void
     {

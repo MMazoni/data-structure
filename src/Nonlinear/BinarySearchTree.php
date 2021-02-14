@@ -59,7 +59,6 @@ class BinarySearchTree
             if ($node->right) {
                 $this->traverse($node->right);
             }
-
         }
     }
 }

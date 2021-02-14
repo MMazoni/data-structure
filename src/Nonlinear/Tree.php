@@ -11,17 +11,15 @@ class Tree
         $this->root = $node;
     }
 
-    public function traverse(?TreeNode $node, int $level = 0): bool
+    public function traverse(?TreeNode $node, int $level = 0): void
     {
-        if ($node && $node->data && $node->children) {
+        if ($node) {
             echo str_repeat("-", $level);
-            echo $node->data . "\n";
+            echo $node->data . PHP_EOL;
 
             foreach ($node->children as $childNode) {
                 $this->traverse($childNode, $level + 1);
             }
-            return true;
         }
-        return false;
     }
 }

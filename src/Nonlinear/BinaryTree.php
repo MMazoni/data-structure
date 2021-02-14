@@ -11,7 +11,7 @@ class BinaryTree
         $this->root = $node;
     }
 
-    public function traverse(?BinaryNode $node, int $level = 0): bool
+    public function traverse(?BinaryNode $node, int $level = 0): void
     {
         if ($node) {
             echo str_repeat('-', $level);
@@ -24,8 +24,6 @@ class BinaryTree
             if ($node->right) {
                 $this->traverse($node->right, $level + 1);
             }
-            return true;
         }
-        return false;
     }
 }

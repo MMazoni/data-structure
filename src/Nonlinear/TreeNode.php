@@ -4,9 +4,9 @@ namespace MMazoni\DataStructure\Nonlinear;
 
 class TreeNode
 {
-    public ?array $children = [];
+    public array $children = [];
 
-    public function __construct(public ?string $data = null)
+    public function __construct(public string $data)
     {
     }
 

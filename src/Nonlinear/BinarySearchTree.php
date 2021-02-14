@@ -49,7 +49,7 @@ class BinarySearchTree
         return $node;
     }
 
-    public function traverse(?Node $node): bool
+    public function traverse(?Node $node): void
     {
         if ($node) {
             if ($node->left) {
@@ -60,8 +60,6 @@ class BinarySearchTree
                 $this->traverse($node->right);
             }
 
-            return true;
         }
-        return false;
     }
 }

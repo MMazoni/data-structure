@@ -7,7 +7,7 @@ class Node
     public ?Node $left;
     public ?Node $right;
 
-    public function __construct(public mixed $data = null)
+    public function __construct(public ?int $data = null)
     {
         $this->data = $data;
         $this->left = null;

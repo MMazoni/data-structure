@@ -6,8 +6,12 @@ class BinarySearchTree
 {
     public ?Node $root = null;
 
-    public function __construct(int $data)
+    public function __construct(?int $data = null)
     {
+        if (is_null($data)) {
+            $this->root = null;
+            return;
+        }
         $this->root = new Node($data);
     }
 
@@ -60,5 +64,24 @@ class BinarySearchTree
                 $this->traverse($node->right);
             }
         }
+    }
+
+    public function search(int $data): Node | bool | null
+    {
+        if ($this->isEmpty()) {
+            return false;
+        }
+        $node = $this->root;
+
+        while ($node) {
+            if ($data > $node->data) {
+                $node = $node->right;
+            } elseif ($data < $node->data) {
+                $node = $node->left;
+            } else {
+                break;
+            }
+        }
+        return $node;
     }
 }

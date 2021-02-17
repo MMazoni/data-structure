@@ -35,8 +35,8 @@ final class BinarySearchTreeTest extends TestCase
      * @depends testCanTraverse
      */
     public function testCanSearch(BinarySearchTree $tree): void {
-        $this->assertEquals(13, $tree->search(13)->data);
-        $this->assertEquals(6, $tree->search(6)->data);
+        $this->assertEquals(13, $tree->search(13)->data());
+        $this->assertEquals(6, $tree->search(6)->data());
         $this->assertNull($tree->search(11));
         $this->assertNull($tree->search(39));
 

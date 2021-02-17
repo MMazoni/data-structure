@@ -12,7 +12,7 @@ class LinkedList implements \Iterator
     {
     }
 
-    public function insertAtBack(mixed $data): void
+    public function insertAtBack(int | string $data): void
     {
         $newNode = new Node($data);
 
@@ -28,7 +28,7 @@ class LinkedList implements \Iterator
         $this->totalNodes++;
     }
 
-    public function insertAtFront(mixed $data): void
+    public function insertAtFront(int | string $data): void
     {
         $newNode = new Node($data);
         if ($this->head === null) {

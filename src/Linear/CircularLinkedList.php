@@ -8,7 +8,7 @@ class CircularLinkedList
     {
     }
 
-    public function insertAtBack(mixed $data): void
+    public function insertAtBack(int | string $data): void
     {
         $newNode = new Node($data);
 

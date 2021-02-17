@@ -55,17 +55,17 @@ class Node
     public function delete(): void
     {
         $node = $this;
-        if (!$node->left && !$node->right) {
+        if (!$node->left && !$node->right && isset($node->parent)) {
             if ($node->parent->left === $node) {
                 $node->parent->left = null;
             } else {
                 $node->parent->right = null;
             }
-        } elseif ($node->left && $node->right) {
+        } elseif ($node->left && $node->right && isset($node->parent)) {
             $successor = $node->successor();
             $node->data = $successor?->data;
             $successor?->delete();
-        } elseif ($node->left) {
+        } elseif ($node->left && isset($node->parent)) {
             if ($node->parent->left === $node) {
                 $node->parent->left = $node->left;
                 $node->left->parent = $node->parent->left;
@@ -74,7 +74,7 @@ class Node
                 $node->left->parent = $node->parent->right;
             }
             $node->left = null;
-        } else {
+        } elseif ($node->right && isset($node->parent)) {
             if ($node->parent->left === $node) {
                 $node->parent->left = $node->right;
                 $node->right->parent = $node->parent->left;
@@ -86,7 +86,7 @@ class Node
         }
     }
 
-    public function data(): int
+    public function data(): ?int
     {
         return $this->data;
     }

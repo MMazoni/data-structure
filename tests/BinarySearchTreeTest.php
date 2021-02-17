@@ -34,7 +34,7 @@ final class BinarySearchTreeTest extends TestCase
     /**
      * @depends testCanTraverse
      */
-    public function testCanSearch(BinarySearchTree $tree): void {
+    public function testCanSearch(BinarySearchTree $tree): BinarySearchTree {
         $this->assertEquals(13, $tree->search(13)->data());
         $this->assertEquals(6, $tree->search(6)->data());
         $this->assertNull($tree->search(11));
@@ -42,5 +42,25 @@ final class BinarySearchTreeTest extends TestCase
 
         $emptyTree = new BinarySearchTree();
         $this->assertFalse($emptyTree->search(10));
+
+        return $tree;
+    }
+
+    /**
+     * @depends testCanSearch
+     */
+    public function testCanDeleteNode(BinarySearchTree $tree): void
+    {
+        $this->assertFalse($tree->delete(16));
+        $this->assertTrue($tree->delete(13));
+        $expected = '3' . PHP_EOL .
+                    '6' . PHP_EOL .
+                    '8' . PHP_EOL .
+                    '10' . PHP_EOL .
+                    '12' . PHP_EOL .
+                    '15' . PHP_EOL .
+                    '36' . PHP_EOL;
+        $this->expectOutputString($expected);
+        $tree->traverse($tree->root);
     }
 }

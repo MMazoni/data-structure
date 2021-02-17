@@ -8,7 +8,7 @@ class DoublyLinkedList
     {
     }
 
-    public function insertAtFront(mixed $data): void
+    public function insertAtFront(int | string $data): void
     {
         $newNode = new Node($data);
         if ($this->head === null) {
@@ -23,7 +23,7 @@ class DoublyLinkedList
         $this->totalNodes++;
     }
 
-    public function insertAtBack(mixed $data): void
+    public function insertAtBack(int | string $data): void
     {
         $newNode = new Node($data);
         if ($this->head === null) {
@@ -53,7 +53,7 @@ class DoublyLinkedList
         return $this->totalNodes;
     }
 
-    public function insertBeforeNode(mixed $data = null, mixed $query = null): void
+    public function insertBeforeNode(int | string $data = null, int | string $query = null): void
     {
         $newNode = new Node($data);
         if ($this->head) {
@@ -74,7 +74,7 @@ class DoublyLinkedList
         }
     }
 
-    public function insertAfterNode(mixed $data = null, mixed $query = null): void
+    public function insertAfterNode(int | string $data = null, int | string $query = null): void
     {
         $newNode = new Node($data);
         if ($this->head) {

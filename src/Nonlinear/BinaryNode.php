@@ -7,7 +7,7 @@ class BinaryNode
     public ?BinaryNode $left;
     public ?BinaryNode $right;
 
-    public function __construct(public mixed $data = null)
+    public function __construct(public int | string | null $data = null)
     {
         $this->data = $data;
         $this->left = null;

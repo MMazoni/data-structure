@@ -53,16 +53,51 @@ class BinarySearchTree
         return $node;
     }
 
-    public function traverse(?Node $node): void
+    public function traverse(?Node $node, string $type = 'in-order'): void
+    {
+        match ($type) {
+            'in-order' => $this->inOrder($node),
+            'pre-order' => $this->preOrder($node),
+            'post-order' => $this->postOrder($node)
+        };
+    }
+
+    public function inOrder(?Node $node): void
     {
         if ($node) {
             if ($node->left()) {
                 $this->traverse($node->left());
             }
-            echo $node->data() . PHP_EOL;
+            echo ($node->data() ?? '') . PHP_EOL;
             if ($node->right()) {
                 $this->traverse($node->right());
             }
+        }
+    }
+
+    public function preOrder(?Node $node): void
+    {
+        if ($node) {
+            echo ($node->data() ?? '') . PHP_EOL;
+            if ($node->left()) {
+                $this->traverse($node->left(), 'pre-order');
+            }
+            if ($node->right()) {
+                $this->traverse($node->right(), 'pre-order');
+            }
+        }
+    }
+
+    public function postOrder(?Node $node): void
+    {
+        if ($node) {
+            if ($node->left()) {
+                $this->traverse($node->left(), 'post-order');
+            }
+            if ($node->right()) {
+                $this->traverse($node->right(), 'post-order');
+            }
+            echo ($node->data() ?? '') . PHP_EOL;
         }
     }
 

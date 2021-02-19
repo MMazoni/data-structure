@@ -5,7 +5,7 @@ use MMazoni\DataStructure\Nonlinear\BinarySearchTree;
 
 final class BinarySearchTreeTest extends TestCase
 {
-    public function testCanTraverse(): BinarySearchTree
+    public function testCanTraverseInOrder(): BinarySearchTree
     {
         $tree = new BinarySearchTree(10);
 
@@ -32,7 +32,45 @@ final class BinarySearchTreeTest extends TestCase
     }
 
     /**
-     * @depends testCanTraverse
+     * @depends testCanTraverseInOrder
+     */
+    public function testCanTraversePreOrder(BinarySearchTree $tree): BinarySearchTree
+    {
+        $expected = '10' . PHP_EOL .
+                    '6' . PHP_EOL .
+                    '3' . PHP_EOL .
+                    '8' . PHP_EOL .
+                    '12' . PHP_EOL .
+                    '15' . PHP_EOL .
+                    '13' . PHP_EOL .
+                    '36' . PHP_EOL;
+        $this->expectOutputString($expected);
+        $tree->traverse(node: $tree->root, type: 'pre-order');
+
+        return $tree;
+    }
+
+    /**
+     * @depends testCanTraversePreOrder
+     */
+    public function testCanTraversePostOrder(BinarySearchTree $tree): BinarySearchTree
+    {
+        $expected = '3' . PHP_EOL .
+                    '8' . PHP_EOL .
+                    '6' . PHP_EOL .
+                    '13' . PHP_EOL .
+                    '36' . PHP_EOL .
+                    '15' . PHP_EOL .
+                    '12' . PHP_EOL .
+                    '10' . PHP_EOL;
+        $this->expectOutputString($expected);
+        $tree->traverse(node: $tree->root, type: 'post-order');
+
+        return $tree;
+    }
+
+    /**
+     * @depends testCanTraversePostOrder
      */
     public function testCanSearch(BinarySearchTree $tree): BinarySearchTree {
         $this->assertEquals(13, $tree->search(13)->data());

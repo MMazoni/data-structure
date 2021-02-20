@@ -4,40 +4,48 @@ namespace MMazoni\DataStructure\Linear;
 
 class LinkedList implements \Iterator
 {
-    private int $totalNodes = 0;
+    public int $totalNodes = 0;
     private ?Node $currentNode = null;
     private int $currentPosition = 0;
 
-    public function __construct(private ?Node $head = null)
+    public function __construct(public ?Node $head = null)
     {
     }
 
-    public function insertAtBack(int | string $data): void
+    public function insertAtBack(int | string | null $data): void
     {
         $newNode = new Node($data);
 
         if ($this->head === null) {
             $this->head = &$newNode;
-        } else {
-            $currentNode = $this->head;
-            while ($currentNode?->getNext() !== null) {
-                $currentNode = $currentNode?->getNext();
-            }
-            $currentNode?->setNext($newNode);
+
+            $this->totalNodes++;
+            return;
         }
+        $currentNode = $this->head;
+        while ($currentNode?->next !== null) {
+            $currentNode = $currentNode?->next;
+        }
+        if (!empty($currentNode)) {
+            $currentNode->next = $newNode;
+        }
+
         $this->totalNodes++;
     }
 
-    public function insertAtFront(int | string $data): void
+    public function insertAtFront(int | string | null $data): void
     {
         $newNode = new Node($data);
         if ($this->head === null) {
             $this->head = &$newNode;
-        } else {
-            $currentFirstNode = $this->head;
-            $this->head = &$newNode;
-            $newNode->setNext($currentFirstNode);
+
+            $this->totalNodes++;
+            return;
         }
+        $currentFirstNode = $this->head;
+        $this->head = &$newNode;
+        $newNode->next = $currentFirstNode;
+
         $this->totalNodes++;
     }
 
@@ -45,72 +53,64 @@ class LinkedList implements \Iterator
     {
         echo "Total nodes: {$this->totalNodes}" . PHP_EOL;
         $currentNode = $this->head;
-        while (!is_null($currentNode)) {
-            echo $currentNode->getData() . PHP_EOL;
-            $currentNode = $currentNode->getNext();
+        while (!is_null($currentNode) && isset($currentNode->data)) {
+            echo $currentNode->data . PHP_EOL;
+            $currentNode = $currentNode->next;
         }
     }
 
-    public function searchNode(mixed $data): Node | bool
+    public function searchNode(int | string $data): Node | bool
     {
         if ($this->head) {
             $currentNode = $this->head;
             while ($currentNode !== null) {
-                if ($currentNode->getData() === $data) {
+                if ($currentNode->data === $data) {
                     return $currentNode;
                 }
-                $currentNode = $currentNode->getNext();
+                $currentNode = $currentNode->next;
             }
         }
         return false;
     }
 
-    public function head(): ?Node
-    {
-        return $this->head;
-    }
-
-    public function totalNodes(): int
-    {
-        return $this->totalNodes;
-    }
-
-    public function insertBeforeNode(mixed $data = null, mixed $query = null): void
+    public function insertBeforeNode(int | string | null $data = null, int | string | null $query = null): void
     {
         $newNode = new Node($data);
         if ($this->head) {
             $previous = null;
             $currentNode = $this->head;
             while ($currentNode !== null) {
-                if ($currentNode->getData() === $query) {
-                    $newNode->setNext($currentNode);
-                    $previous?->setNext($newNode);
+                if ($currentNode->data === $query) {
+                    $newNode->next = $currentNode;
+                    if (!empty($previous)) {
+                        $previous->next = $newNode;
+                    }
                     $this->totalNodes++;
                     break;
                 }
                 $previous = $currentNode;
-                $currentNode = $currentNode->getNext();
+                $currentNode = $currentNode->next;
             }
         }
     }
 
-    public function insertAfterNode(mixed $data = null, mixed $query = null): void
+    public function insertAfterNode(int | string | null $data = null, int | string | null $query = null): void
     {
         $newNode = new Node($data);
         if ($this->head) {
             $nextNode = null;
             $currentNode = $this->head;
             while ($currentNode !== null) {
-                if ($currentNode->getData() === $query) {
+                if ($currentNode->data === $query) {
                     if ($nextNode !== null) {
-                        $newNode->setNext($nextNode);
+                        $newNode->next = $nextNode;
                     }
-                    $currentNode->setNext($newNode);
+                    $currentNode->next = $newNode;
                     $this->totalNodes++;
                     break;
                 }
-                $currentNode = $currentNode->getNext();
-                $nextNode = $currentNode?->getNext();
+                $currentNode = $currentNode->next;
+                $nextNode = $currentNode?->next;
             }
         }
     }
@@ -118,8 +118,8 @@ class LinkedList implements \Iterator
     public function deleteFirstNode(): bool
     {
         if ($this->head) {
-            if ($this->head->getNext() !== null) {
-                $this->head = $this->head->getNext();
+            if ($this->head->next !== null) {
+                $this->head = $this->head->next;
             } else {
                 $this->head = null;
             }
@@ -133,20 +133,21 @@ class LinkedList implements \Iterator
     {
         if ($this->head !== null) {
             $currentNode = $this->head;
-            if ($currentNode->getNext() === null && $this->totalNodes > 1) {
+            if ($currentNode->next === null && $this->totalNodes > 1) {
                 $this->head = null;
                 return false;
             }
-            if ($currentNode->getNext() !== null) {
+            if ($currentNode->next !== null) {
                 $previousNode = null;
-                while ($currentNode?->getNext() !== null) {
+                while ($currentNode?->next !== null) {
                     $previousNode = $currentNode;
-                    $currentNode = $currentNode?->getNext();
+                    $currentNode = $currentNode?->next;
                 }
-
-                $previousNode?->setNext(null);
+                if (!empty($previousNode)) {
+                    $previousNode->next = null;
+                }
             }
-            if ($currentNode?->getNext() === null && $this->totalNodes === 1) {
+            if ($currentNode?->next === null && $this->totalNodes === 1) {
                 $this->head = null;
             }
 
@@ -156,27 +157,27 @@ class LinkedList implements \Iterator
         return false;
     }
 
-    public function deleteNode(mixed $query = null): bool
+    public function deleteNode(int | string | null $query = null): bool
     {
         if ($this->head) {
             $previous = null;
             $currentNode = $this->head;
             while ($currentNode !== null) {
-                if ($currentNode->getData() === $query) {
-                    if ($currentNode->getNext() === null && !is_null($previous)) {
-                        $previous->setNext(null);
+                if ($currentNode->data === $query) {
+                    if ($currentNode->next === null && !is_null($previous)) {
+                        $previous->next = null;
                     }
-                    if ($currentNode->getNext() !== null && !is_null($previous)) {
-                        $previous->setNext($currentNode->getNext());
+                    if ($currentNode->next !== null && !is_null($previous)) {
+                        $previous->next = $currentNode->next;
                     }
-                    if ($this->head->getData() === $query) {
-                        $this->head = $currentNode->getNext();
+                    if ($this->head->data === $query) {
+                        $this->head = $currentNode->next;
                     }
                     $this->totalNodes--;
                     return true;
                 }
                 $previous = $currentNode;
-                $currentNode = $currentNode->getNext();
+                $currentNode = $currentNode->next;
             }
         }
         return false;
@@ -185,13 +186,13 @@ class LinkedList implements \Iterator
     public function reverse(): void
     {
         if ($this->head !== null) {
-            if ($this->head->getNext() !== null) {
+            if ($this->head->next !== null) {
                 $reversedList = null;
                 $next = null;
                 $currentNode = $this->head;
                 while ($currentNode !== null) {
-                    $next = $currentNode->getNext();
-                    $currentNode->setNext($reversedList);
+                    $next = $currentNode->next;
+                    $currentNode->next = $reversedList;
                     $reversedList = $currentNode;
                     $currentNode = $next;
                 }
@@ -210,7 +211,7 @@ class LinkedList implements \Iterator
                     return $currentNode;
                 }
                 $count++;
-                $currentNode = $currentNode->getNext();
+                $currentNode = $currentNode->next;
             }
         }
         return null;
@@ -220,13 +221,13 @@ class LinkedList implements \Iterator
 
     public function current()
     {
-        return $this->currentNode?->getData();
+        return $this->currentNode?->data;
     }
 
     public function next()
     {
         $this->currentPosition++;
-        $this->currentNode = $this->currentNode?->getNext();
+        $this->currentNode = $this->currentNode?->next;
     }
 
     public function key()

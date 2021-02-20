@@ -32,11 +32,11 @@ class BooksList implements Stack
 
     public function top(): ?string
     {
-        return $this->stack->getNthNode($this->stack->totalNodes())?->getData();
+        return $this->stack->getNthNode($this->stack->totalNodes)?->data;
     }
 
     public function isEmpty(): bool
     {
-        return $this->stack->totalNodes() === 0;
+        return $this->stack->totalNodes === 0;
     }
 }

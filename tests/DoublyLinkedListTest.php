@@ -9,11 +9,11 @@ final class DoublyLinkedListTest extends TestCase
     {
         $doublyLinkedList = new DoublyLinkedList();
         $doublyLinkedList->insertAtBack(10);
-        $this->assertEquals(1, $doublyLinkedList->totalNodes());
-        $this->assertEquals(10, $doublyLinkedList->head()->getData());
+        $this->assertEquals(1, $doublyLinkedList->totalNodes);
+        $this->assertEquals(10, $doublyLinkedList->head->data);
         $doublyLinkedList->insertAtBack(11);
-        $this->assertEquals(2, $doublyLinkedList->totalNodes());
-        $this->assertEquals(11, $doublyLinkedList->head()->getNext()->getData());
+        $this->assertEquals(2, $doublyLinkedList->totalNodes);
+        $this->assertEquals(11, $doublyLinkedList->head->next->data);
 
         return $doublyLinkedList;
     }
@@ -24,11 +24,11 @@ final class DoublyLinkedListTest extends TestCase
     public function testCanInsertAtFront(DoublyLinkedList $doublyLinkedList): DoublyLinkedList
     {
         $doublyLinkedList->insertAtFront('front');
-        $this->assertEquals(3, $doublyLinkedList->totalNodes());
-        $this->assertEquals('front', $doublyLinkedList->head()->getData());
+        $this->assertEquals(3, $doublyLinkedList->totalNodes);
+        $this->assertEquals('front', $doublyLinkedList->head->data);
         $doublyLinkedList->insertAtFront(10);
-        $this->assertEquals(4, $doublyLinkedList->totalNodes());
-        $this->assertEquals(10, $doublyLinkedList->head()->getData());
+        $this->assertEquals(4, $doublyLinkedList->totalNodes);
+        $this->assertEquals(10, $doublyLinkedList->head->data);
 
         return $doublyLinkedList;
     }
@@ -39,8 +39,8 @@ final class DoublyLinkedListTest extends TestCase
     public function testCanInsertBeforeNode(DoublyLinkedList $doublyLinkedList): DoublyLinkedList
     {
         $doublyLinkedList->insertBeforeNode('nou', 11);
-        $this->assertEquals(5, $doublyLinkedList->totalNodes());
-        $this->assertEquals('nou', $doublyLinkedList->tail()->getPrev()->getData());
+        $this->assertEquals(5, $doublyLinkedList->totalNodes);
+        $this->assertEquals('nou', $doublyLinkedList->tail->previous->data);
 
         return $doublyLinkedList;
     }
@@ -51,8 +51,8 @@ final class DoublyLinkedListTest extends TestCase
     public function testCanInsertAfterNode(DoublyLinkedList $doublyLinkedList): DoublyLinkedList
     {
         $doublyLinkedList->insertAfterNode('nou', 10);
-        $this->assertEquals(6, $doublyLinkedList->totalNodes());
-        $this->assertEquals('nou', $doublyLinkedList->head()->getNext()->getData());
+        $this->assertEquals(6, $doublyLinkedList->totalNodes);
+        $this->assertEquals('nou', $doublyLinkedList->head->next->data);
 
         return $doublyLinkedList;
     }
@@ -63,8 +63,8 @@ final class DoublyLinkedListTest extends TestCase
     public function testCanDeleteFirstNode(DoublyLinkedList $doublyLinkedList): DoublyLinkedList
     {
         $doublyLinkedList->deleteFirstNode();
-        $this->assertEquals(5, $doublyLinkedList->totalNodes());
-        $this->assertEquals('nou', $doublyLinkedList->head()->getData());
+        $this->assertEquals(5, $doublyLinkedList->totalNodes);
+        $this->assertEquals('nou', $doublyLinkedList->head->data);
 
         return $doublyLinkedList;
     }
@@ -75,9 +75,9 @@ final class DoublyLinkedListTest extends TestCase
     public function testCanDeleteLastNode(DoublyLinkedList $doublyLinkedList): DoublyLinkedList
     {
         $doublyLinkedList->deleteLastNode();
-        $this->assertEquals(4, $doublyLinkedList->totalNodes());
-        $this->assertEquals(10, $doublyLinkedList->head()
-            ->getNext()->getNext()->getData());
+        $this->assertEquals(4, $doublyLinkedList->totalNodes);
+        $this->assertEquals(10, $doublyLinkedList->head
+            ->next->next->data);
 
         return $doublyLinkedList;
     }
@@ -88,8 +88,8 @@ final class DoublyLinkedListTest extends TestCase
     public function testCanDeleteNode(DoublyLinkedList $doublyLinkedList): void
     {
         $this->assertTrue($doublyLinkedList->deleteNode('nou'));
-        $this->assertEquals(3, $doublyLinkedList->totalNodes());
-        $this->assertEquals('front', $doublyLinkedList->head()->getData());
+        $this->assertEquals(3, $doublyLinkedList->totalNodes);
+        $this->assertEquals('front', $doublyLinkedList->head->data);
     }
 
     /**

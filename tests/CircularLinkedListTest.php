@@ -9,11 +9,11 @@ final class CircularLinkedListTest extends TestCase
     {
         $circular = new CircularLinkedList();
         $circular->insertAtBack(10);
-        $this->assertEquals(1, $circular->totalNodes());
-        $this->assertEquals(10, $circular->head()->getData());
+        $this->assertEquals(1, $circular->totalNodes);
+        $this->assertEquals(10, $circular->head->data);
         $circular->insertAtBack(11);
-        $this->assertEquals(2, $circular->totalNodes());
-        $this->assertEquals(11, $circular->head()->getNext()->getData());
+        $this->assertEquals(2, $circular->totalNodes);
+        $this->assertEquals(11, $circular->head->next->data);
 
         return $circular;
     }

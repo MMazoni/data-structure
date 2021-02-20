@@ -36,7 +36,7 @@ class DeQueue
 
     public function enqueueAtBack(string $newItem): void
     {
-        if ($this->queue->totalNodes() >= $this->limit) {
+        if ($this->queue->totalNodes >= $this->limit) {
             throw new \OverflowException('Queue is full');
         }
         $this->queue->insertAtBack($newItem);
@@ -44,7 +44,7 @@ class DeQueue
 
     public function enqueueAtFront(string $newItem): void
     {
-        if ($this->queue->totalNodes() >= $this->limit) {
+        if ($this->queue->totalNodes >= $this->limit) {
             throw new \OverflowException('Queue is full');
         }
         $this->queue->insertAtFront($newItem);
@@ -52,16 +52,16 @@ class DeQueue
 
     public function peekFront(): ?string
     {
-        return $this->queue->getNthNode(1)?->getData();
+        return $this->queue->getNthNode(1)?->data;
     }
 
     public function peekBack(): ?string
     {
-        return $this->queue->getNthNode($this->queue->totalNodes())?->getData();
+        return $this->queue->getNthNode($this->queue->totalNodes)?->data;
     }
 
     public function isEmpty(): bool
     {
-        return $this->queue->totalNodes() == 0;
+        return $this->queue->totalNodes == 0;
     }
 }

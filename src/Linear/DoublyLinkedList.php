@@ -4,7 +4,7 @@ namespace MMazoni\DataStructure\Linear;
 
 class DoublyLinkedList
 {
-    public function __construct(private ?Node $head = null, private ?Node $tail = null, private int $totalNodes = 0)
+    public function __construct(public ?Node $head = null, public ?Node $tail = null, public int $totalNodes = 0)
     {
     }
 
@@ -17,8 +17,8 @@ class DoublyLinkedList
         } else {
             $currentFirstNode = $this->head;
             $this->head = &$newNode;
-            $newNode->setNext($currentFirstNode);
-            $currentFirstNode->setPrev($newNode);
+            $newNode->next = $currentFirstNode;
+            $currentFirstNode->previous = $newNode;
         }
         $this->totalNodes++;
     }
@@ -31,26 +31,11 @@ class DoublyLinkedList
             $this->tail = $newNode;
         } else {
             $currentNode = $this->tail;
-            $currentNode?->setNext($newNode);
-            $newNode->setPrev($currentNode);
+            $currentNode->next = $newNode;
+            $newNode->previous = $currentNode;
             $this->tail = $newNode;
         }
         $this->totalNodes++;
-    }
-
-    public function head(): ?Node
-    {
-        return $this->head;
-    }
-
-    public function tail(): ?Node
-    {
-        return $this->tail;
-    }
-
-    public function totalNodes(): int
-    {
-        return $this->totalNodes;
     }
 
     public function insertBeforeNode(int | string $data = null, int | string $query = null): void
@@ -60,16 +45,18 @@ class DoublyLinkedList
             $previous = null;
             $currentNode = $this->head;
             while ($currentNode !== null) {
-                if ($currentNode->getData() === $query) {
-                    $newNode->setNext($currentNode);
-                    $currentNode->setPrev($newNode);
-                    $previous?->setNext($newNode);
-                    $newNode->setPrev($previous);
+                if ($currentNode->data === $query) {
+                    $newNode->next = $currentNode;
+                    $currentNode->previous = $newNode;
+                    if (!empty($previous)) {
+                        $previous->next = $newNode;
+                    }
+                    $newNode->previous = $previous;
                     $this->totalNodes++;
                     break;
                 }
                 $previous = $currentNode;
-                $currentNode = $currentNode->getNext();
+                $currentNode = $currentNode->next;
             }
         }
     }
@@ -81,25 +68,27 @@ class DoublyLinkedList
             $nextNode = null;
             $currentNode = $this->head;
             while ($currentNode !== null) {
-                if ($currentNode->getData() === $query) {
+                if ($currentNode->data === $query) {
                     if ($nextNode !== null) {
-                        $newNode->setNext($nextNode);
+                        $newNode->next = $nextNode;
                     }
-                    if ($this->head->getData() === $query) {
-                        $nextNode = $currentNode->getNext();
-                        $newNode->setNext($nextNode);
+                    if ($this->head->data === $query) {
+                        $nextNode = $currentNode->next;
+                        $newNode->next = $nextNode;
                     }
                     if ($currentNode === $this->tail) {
                         $this->tail = $newNode;
                     }
-                    $currentNode->setNext($newNode);
-                    $nextNode?->setPrev($newNode);
-                    $newNode->setPrev($currentNode);
+                    $currentNode->next = $newNode;
+                    if (!empty($nextNode)) {
+                        $nextNode->previous = $newNode;
+                    }
+                    $newNode->previous = $currentNode;
                     $this->totalNodes++;
                     break;
                 }
-                $currentNode = $currentNode->getNext();
-                $nextNode = $currentNode?->getNext();
+                $currentNode = $currentNode->next;
+                $nextNode = $currentNode?->next;
             }
         }
     }
@@ -107,9 +96,9 @@ class DoublyLinkedList
     public function deleteFirstNode(): bool
     {
         if ($this->head) {
-            if ($this->head->getNext() !== null) {
-                $this->head = $this->head->getNext();
-                $this->head?->setPrev(null);
+            if ($this->head->next !== null) {
+                $this->head = $this->head->next;
+                $this->head->next = null;
             } else {
                 $this->head = null;
             }
@@ -123,13 +112,13 @@ class DoublyLinkedList
     {
         if ($this->tail !== null) {
             $currentNode = $this->tail;
-            if ($currentNode->getPrev() === null) {
+            if ($currentNode->previous === null) {
                 $this->head = null;
                 $this->tail = null;
             } else {
-                $previousNode = $currentNode->getPrev();
+                $previousNode = $currentNode->previous;
                 $this->tail = $previousNode;
-                $previousNode?->setNext(null);
+                $previousNode->next = null;
                 $this->totalNodes--;
                 return true;
             }
@@ -143,27 +132,27 @@ class DoublyLinkedList
             $previous = null;
             $currentNode = $this->head;
             while ($currentNode !== null) {
-                if ($currentNode->getData() === $query) {
-                    if ($currentNode->getNext() === null && !is_null($previous)) {
-                        $previous->setNext(null);
+                if ($currentNode->data === $query) {
+                    if ($currentNode->next === null && !is_null($previous)) {
+                        $previous->next = null;
                     }
-                    if ($currentNode->getNext() !== null && !is_null($previous)) {
-                        $previous->setNext($currentNode->getNext());
-                        $currentNode->getNext()?->setPrev($previous);
+                    if ($currentNode->next !== null && !is_null($previous)) {
+                        $previous->next = $currentNode->next;
+                        $currentNode->next->previous = $previous;
                     }
-                    if ($this->head->getData() === $query) {
-                        $this->head = $currentNode->getNext();
-                        $this->head?->setPrev(null);
+                    if ($this->head->data === $query) {
+                        $this->head = $currentNode->next;
+                        $this->head->previous = null;
                     }
-                    if ($this->tail?->getData() === $query && $currentNode->getData() !== $query) {
-                        $this->tail = $currentNode->getNext();
-                        $this->tail?->setNext(null);
+                    if ($this->tail?->data === $query && $currentNode->data !== $query) {
+                        $this->tail = $currentNode->next;
+                        $this->tail->next = null;
                     }
                     $this->totalNodes--;
                     return true;
                 }
                 $previous = $currentNode;
-                $currentNode = $currentNode->getNext();
+                $currentNode = $currentNode->next;
             }
         }
         return false;
@@ -174,8 +163,8 @@ class DoublyLinkedList
         echo "Total nodes: {$this->totalNodes}" . PHP_EOL;
         $currentNode = $this->head;
         while ($currentNode !== null) {
-            echo $currentNode->getData() . PHP_EOL;
-            $currentNode = $currentNode->getNext();
+            echo $currentNode->data . PHP_EOL;
+            $currentNode = $currentNode->next;
         }
     }
 
@@ -184,8 +173,8 @@ class DoublyLinkedList
         echo "Total nodes: {$this->totalNodes}" . PHP_EOL;
         $currentNode = $this->tail;
         while ($currentNode !== null) {
-            echo $currentNode->getData() . PHP_EOL;
-            $currentNode = $currentNode->getPrev();
+            echo $currentNode->data . PHP_EOL;
+            $currentNode = $currentNode->previous;
         }
     }
 }

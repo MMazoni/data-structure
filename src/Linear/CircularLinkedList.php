@@ -14,14 +14,16 @@ class CircularLinkedList
 
         if ($this->head === null) {
             $this->head = &$newNode;
-        } else {
-            $currentNode = $this->head;
-            while ($currentNode?->next !== $this->head) {
-                $currentNode = $currentNode?->next;
-            }
-            if (!empty($currentNode)) {
-                $currentNode->next = $newNode;
-            }
+            $newNode->next = $this->head;
+            $this->totalNodes++;
+            return;
+        }
+        $currentNode = $this->head;
+        while ($currentNode?->next !== $this->head) {
+            $currentNode = $currentNode?->next;
+        }
+        if (!empty($currentNode)) {
+            $currentNode->next = $newNode;
         }
         $newNode->next = $this->head;
         $this->totalNodes++;
@@ -32,13 +34,16 @@ class CircularLinkedList
         echo "Total nodes: {$this->totalNodes}" . PHP_EOL;
         $currentNode = $this->head;
         while ($currentNode?->next !== $this->head) {
-            if (isset($currentNode->data)) {
-                echo $currentNode->data . PHP_EOL;
-            }
+            $this->echoNodeData($currentNode?->data);
             $currentNode = $currentNode?->next;
         }
-        if (isset($currentNode->data)) {
-            echo $currentNode->data . PHP_EOL;
+        $this->echoNodeData($currentNode?->data);
+    }
+
+    private function echoNodeData(?string $data): void
+    {
+        if (isset($data)) {
+            echo $data . PHP_EOL;
         }
     }
 }

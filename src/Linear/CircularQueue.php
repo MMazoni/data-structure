@@ -37,10 +37,9 @@ class CircularQueue implements Queue
     {
         if ($this->isFull()) {
             throw new \OverflowException("Queue is Full.");
-        } else {
-            $this->queue[$this->rear] = $item;
-            $this->rear = ($this->rear + 1) % $this->limit;
         }
+        $this->queue[$this->rear] = $item;
+        $this->rear = ($this->rear + 1) % $this->limit;
     }
 
     public function dequeue(): string
@@ -48,11 +47,10 @@ class CircularQueue implements Queue
         $item = "";
         if ($this->isEmpty()) {
             throw new \UnderflowException("Queue is empty");
-        } else {
-            $item = $this->queue[$this->front];
-            $this->queue[$this->front] = null;
-            $this->front = ($this->front + 1) % $this->limit;
         }
+        $item = $this->queue[$this->front];
+        $this->queue[$this->front] = null;
+        $this->front = ($this->front + 1) % $this->limit;
         return $item;
     }
 

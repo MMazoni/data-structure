@@ -12,7 +12,7 @@ class LinkedList implements \Iterator
     {
     }
 
-    public function insertAtBack(int | string | null $data): void
+    public function insertAtBack(int | string $data): void
     {
         $newNode = new Node($data);
 
@@ -33,7 +33,7 @@ class LinkedList implements \Iterator
         $this->totalNodes++;
     }
 
-    public function insertAtFront(int | string | null $data): void
+    public function insertAtFront(int | string $data): void
     {
         $newNode = new Node($data);
         if ($this->head === null) {
@@ -73,7 +73,7 @@ class LinkedList implements \Iterator
         return false;
     }
 
-    public function insertBeforeNode(int | string | null $data = null, int | string | null $query = null): void
+    public function insertBeforeNode(int | string $data = null, int | string $query = null): void
     {
         $newNode = new Node($data);
         if ($this->head) {
@@ -94,7 +94,7 @@ class LinkedList implements \Iterator
         }
     }
 
-    public function insertAfterNode(int | string | null $data = null, int | string | null $query = null): void
+    public function insertAfterNode(int | string $data = null, int | string $query = null): void
     {
         $newNode = new Node($data);
         if ($this->head) {
@@ -157,12 +157,13 @@ class LinkedList implements \Iterator
         return false;
     }
 
-    public function deleteNode(int | string | null $query = null): bool
+    public function deleteNode(int | string $query = null): bool
     {
         if ($this->head) {
             $previous = null;
             $currentNode = $this->head;
             while ($currentNode !== null) {
+                // extract method
                 if ($currentNode->data === $query) {
                     if ($currentNode->next === null && !is_null($previous)) {
                         $previous->next = null;
@@ -186,10 +187,12 @@ class LinkedList implements \Iterator
     public function reverse(): void
     {
         if ($this->head !== null) {
+            // extract method
             if ($this->head->next !== null) {
                 $reversedList = null;
                 $next = null;
                 $currentNode = $this->head;
+                // extract method
                 while ($currentNode !== null) {
                     $next = $currentNode->next;
                     $currentNode->next = $reversedList;
@@ -206,6 +209,7 @@ class LinkedList implements \Iterator
         $count = 1;
         if ($this->head !== null) {
             $currentNode = $this->head;
+            // extract method
             while ($currentNode !== null) {
                 if ($count === $position) {
                     return $currentNode;

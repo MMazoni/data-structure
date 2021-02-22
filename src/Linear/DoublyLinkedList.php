@@ -14,12 +14,13 @@ class DoublyLinkedList
         if ($this->head === null) {
             $this->head = &$newNode;
             $this->tail = $newNode;
-        } else {
-            $currentFirstNode = $this->head;
-            $this->head = &$newNode;
-            $newNode->next = $currentFirstNode;
-            $currentFirstNode->previous = $newNode;
+            $this->totalNodes++;
+            return;
         }
+        $currentFirstNode = $this->head;
+        $this->head = &$newNode;
+        $newNode->next = $currentFirstNode;
+        $currentFirstNode->previous = $newNode;
         $this->totalNodes++;
     }
 
@@ -29,12 +30,15 @@ class DoublyLinkedList
         if ($this->head === null) {
             $this->head = &$newNode;
             $this->tail = $newNode;
-        } else {
-            $currentNode = $this->tail;
-            $currentNode->next = $newNode;
-            $newNode->previous = $currentNode;
-            $this->tail = $newNode;
+            $this->totalNodes++;
+            return;
         }
+        $currentNode = $this->tail;
+        if (!empty($currentNode)) {
+            $currentNode->next = $newNode;
+        }
+        $newNode->previous = $currentNode;
+        $this->tail = $newNode;
         $this->totalNodes++;
     }
 
@@ -98,10 +102,11 @@ class DoublyLinkedList
         if ($this->head) {
             if ($this->head->next !== null) {
                 $this->head = $this->head->next;
-                $this->head->next = null;
-            } else {
-                $this->head = null;
+                $this->head->previous = null;
+                $this->totalNodes--;
+                return true;
             }
+            $this->head = null;
             $this->totalNodes--;
             return true;
         }
@@ -112,16 +117,15 @@ class DoublyLinkedList
     {
         if ($this->tail !== null) {
             $currentNode = $this->tail;
-            if ($currentNode->previous === null) {
-                $this->head = null;
-                $this->tail = null;
-            } else {
+            if ($currentNode->previous != null) {
                 $previousNode = $currentNode->previous;
                 $this->tail = $previousNode;
                 $previousNode->next = null;
                 $this->totalNodes--;
                 return true;
             }
+            $this->head = null;
+            $this->tail = null;
         }
         return false;
     }
@@ -140,11 +144,11 @@ class DoublyLinkedList
                         $previous->next = $currentNode->next;
                         $currentNode->next->previous = $previous;
                     }
-                    if ($this->head->data === $query) {
+                    if ($this->head->data === $query && isset($currentNode->next->previous)) {
                         $this->head = $currentNode->next;
                         $this->head->previous = null;
                     }
-                    if ($this->tail?->data === $query && $currentNode->data !== $query) {
+                    if ($this->tail?->data === $query && $currentNode->data !== $query && isset($currentNode->next->next)) {
                         $this->tail = $currentNode->next;
                         $this->tail->next = null;
                     }

@@ -18,8 +18,9 @@ class Sorting
                     $swapped = true;
                 }
             }
-            if (!$swapped)
+            if (!$swapped) {
                 break;
+            }
         }
         return $array;
     }

@@ -130,36 +130,42 @@ class DoublyLinkedList
         return false;
     }
 
-    public function deleteNode(mixed $query = null): bool
+    public function deleteNode(int | string | null $query = null): bool
     {
         if ($this->head) {
             $previous = null;
             $currentNode = $this->head;
             while ($currentNode !== null) {
-                if ($currentNode->data === $query) {
-                    if ($currentNode->next === null && !is_null($previous)) {
-                        $previous->next = null;
-                    }
-                    if ($currentNode->next !== null && !is_null($previous)) {
-                        $previous->next = $currentNode->next;
-                        $currentNode->next->previous = $previous;
-                    }
-                    if ($this->head->data === $query && isset($currentNode->next->previous)) {
-                        $this->head = $currentNode->next;
-                        $this->head->previous = null;
-                    }
-                    if ($this->tail?->data === $query && $currentNode->data !== $query && isset($currentNode->next->next)) {
-                        $this->tail = $currentNode->next;
-                        $this->tail->next = null;
-                    }
-                    $this->totalNodes--;
-                    return true;
-                }
+                $this->chooseNodeToDelete($currentNode, $previous, $query);
                 $previous = $currentNode;
                 $currentNode = $currentNode->next;
             }
         }
         return false;
+    }
+
+    private function chooseNodeToDelete(Node $currentNode, ?Node $previous, string | int | null $query): bool | null
+    {
+        if ($currentNode->data === $query) {
+            if ($currentNode->next === null && !is_null($previous)) {
+                $previous->next = null;
+            }
+            if ($currentNode->next !== null && !is_null($previous)) {
+                $previous->next = $currentNode->next;
+                $currentNode->next->previous = $previous;
+            }
+            if ($this->head?->data === $query && isset($currentNode->next->previous)) {
+                $this->head = $currentNode->next;
+                $this->head->previous = null;
+            }
+            if ($this->tail?->data === $query && $currentNode->data !== $query && isset($currentNode->next->next)) {
+                $this->tail = $currentNode->next;
+                $this->tail->next = null;
+            }
+            $this->totalNodes--;
+            return true;
+        }
+        return null;
     }
 
     public function displayForward(): void

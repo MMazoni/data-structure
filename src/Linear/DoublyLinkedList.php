@@ -136,7 +136,10 @@ class DoublyLinkedList
             $previous = null;
             $currentNode = $this->head;
             while ($currentNode !== null) {
-                $this->chooseNodeToDelete($currentNode, $previous, $query);
+                $isDeleted = $this->chooseNodeToDelete($currentNode, $previous, $query);
+                if ($isDeleted) {
+                    return $isDeleted;
+                }
                 $previous = $currentNode;
                 $currentNode = $currentNode->next;
             }
@@ -144,7 +147,7 @@ class DoublyLinkedList
         return false;
     }
 
-    private function chooseNodeToDelete(Node $currentNode, ?Node $previous, string | int | null $query): bool | null
+    private function chooseNodeToDelete(Node $currentNode, ?Node $previous, string | int | null $query): bool
     {
         if ($currentNode->data === $query) {
             if ($currentNode->next === null && !is_null($previous)) {
@@ -165,7 +168,7 @@ class DoublyLinkedList
             $this->totalNodes--;
             return true;
         }
-        return null;
+        return false;
     }
 
     public function displayForward(): void

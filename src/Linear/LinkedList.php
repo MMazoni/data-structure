@@ -63,14 +63,20 @@ class LinkedList implements \Iterator
     {
         if ($this->head) {
             $currentNode = $this->head;
-            while ($currentNode !== null) {
-                if ($currentNode->data === $data) {
-                    return $currentNode;
-                }
-                $currentNode = $currentNode->next;
-            }
+            return $this->searchedNode($currentNode, $data) ?? false;
         }
         return false;
+    }
+
+    private function searchedNode(Node $currentNode, int | string $data): ?Node
+    {
+        while ($currentNode !== null) {
+            if ($currentNode->data === $data) {
+                return $currentNode;
+            }
+            $currentNode = $currentNode->next;
+        }
+        return $currentNode;
     }
 
     public function insertBeforeNode(int | string $data = null, int | string $query = null): void

@@ -126,9 +126,10 @@ class LinkedList implements \Iterator
         if ($this->head) {
             if ($this->head->next !== null) {
                 $this->head = $this->head->next;
-            } else {
-                $this->head = null;
+                $this->totalNodes--;
+                return true;
             }
+            $this->head = null;
             $this->totalNodes--;
             return true;
         }
@@ -168,26 +169,36 @@ class LinkedList implements \Iterator
         if ($this->head) {
             $previous = null;
             $currentNode = $this->head;
-            while ($currentNode !== null) {
-                // extract method
-                if ($currentNode->data === $query) {
-                    if ($currentNode->next === null && !is_null($previous)) {
-                        $previous->next = null;
-                    }
-                    if ($currentNode->next !== null && !is_null($previous)) {
-                        $previous->next = $currentNode->next;
-                    }
-                    if ($this->head->data === $query) {
-                        $this->head = $currentNode->next;
-                    }
-                    $this->totalNodes--;
-                    return true;
-                }
-                $previous = $currentNode;
-                $currentNode = $currentNode->next;
-            }
+            return $this->findToDelete($currentNode, $previous, $query);
         }
         return false;
+    }
+
+    private function findToDelete(Node $currentNode, ?Node $previous, int | string | null $query): bool
+    {
+        while ($currentNode !== null) {
+            if ($currentNode->data === $query) {
+                return $this->delete($currentNode, $previous, $query);
+            }
+            $previous = $currentNode;
+            $currentNode = $currentNode->next;
+        }
+        return false;
+    }
+
+    private function delete(Node $currentNode, ?Node $previous, int | string | null $query): bool
+    {
+        if ($currentNode->next === null && !is_null($previous)) {
+            $previous->next = null;
+        }
+        if ($currentNode->next !== null && !is_null($previous)) {
+            $previous->next = $currentNode->next;
+        }
+        if ($this->head?->data === $query) {
+            $this->head = $currentNode->next;
+        }
+        $this->totalNodes--;
+        return true;
     }
 
     public function reverse(): void

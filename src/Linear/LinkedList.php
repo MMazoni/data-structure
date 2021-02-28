@@ -204,21 +204,29 @@ class LinkedList implements \Iterator
     public function reverse(): void
     {
         if ($this->head !== null) {
-            // extract method
-            if ($this->head->next !== null) {
-                $reversedList = null;
-                $next = null;
-                $currentNode = $this->head;
-                // extract method
-                while ($currentNode !== null) {
-                    $next = $currentNode->next;
-                    $currentNode->next = $reversedList;
-                    $reversedList = $currentNode;
-                    $currentNode = $next;
-                }
-                $this->head = $reversedList;
-            }
+            $this->reverseListIfCan();
         }
+    }
+
+    private function reverseListIfCan(): void
+    {
+        if ($this->head?->next !== null) {
+            $reversedList = null;
+            $next = null;
+            $currentNode = $this->head;
+            $this->doReverse($currentNode, $next, $reversedList);
+        }
+    }
+
+    private function doReverse(?Node $currentNode, ?Node $next, ?Node $reversedList): void
+    {
+        while ($currentNode !== null) {
+            $next = $currentNode->next;
+            $currentNode->next = $reversedList;
+            $reversedList = $currentNode;
+            $currentNode = $next;
+        }
+        $this->head = $reversedList;
     }
 
     public function getNthNode(int $position = 0): ?Node

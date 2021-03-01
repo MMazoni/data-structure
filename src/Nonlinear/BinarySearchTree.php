@@ -109,13 +109,14 @@ class BinarySearchTree
         $node = $this->root;
 
         while ($node) {
-            if ($data > $node->data()) {
-                $node = $node->right();
-            } elseif ($data < $node->data()) {
-                $node = $node->left();
-            } else {
+            if ($data === $node->data()) {
                 break;
             }
+            if ($data > $node->data()) {
+                $node = $node->right();
+                continue;
+            }
+            $node = $node->left();
         }
         return $node;
     }

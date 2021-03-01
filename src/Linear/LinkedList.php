@@ -234,14 +234,19 @@ class LinkedList implements \Iterator
         $count = 1;
         if ($this->head !== null) {
             $currentNode = $this->head;
-            // extract method
-            while ($currentNode !== null) {
-                if ($count === $position) {
-                    return $currentNode;
-                }
-                $count++;
-                $currentNode = $currentNode->next;
+            return $this->iterateToFindNode($currentNode, $count, $position);
+        }
+        return null;
+    }
+
+    private function iterateToFindNode(Node $currentNode, int $count, int $position): ?Node
+    {
+        while ($currentNode !== null) {
+            if ($count === $position) {
+                return $currentNode;
             }
+            $count++;
+            $currentNode = $currentNode->next;
         }
         return null;
     }

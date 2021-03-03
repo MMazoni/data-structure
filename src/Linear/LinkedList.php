@@ -61,11 +61,11 @@ class LinkedList implements \Iterator
 
     public function searchNode(int | string $data): Node | bool
     {
-        if ($this->head) {
-            $currentNode = $this->head;
-            return $this->searchedNode($currentNode, $data) ?? false;
+        if (!$this->head) {
+            return false;
         }
-        return false;
+        $currentNode = $this->head;
+        return $this->searchedNode($currentNode, $data) ?? false;
     }
 
     private function searchedNode(Node $currentNode, int | string $data): ?Node
@@ -81,59 +81,61 @@ class LinkedList implements \Iterator
 
     public function insertBeforeNode(int | string $data = null, int | string $query = null): void
     {
+        if (!$this->head) {
+            return;
+        }
         $newNode = new Node($data);
-        if ($this->head) {
-            $previous = null;
-            $currentNode = $this->head;
-            while ($currentNode !== null) {
-                if ($currentNode->data === $query) {
-                    $newNode->next = $currentNode;
-                    if (!empty($previous)) {
-                        $previous->next = $newNode;
-                    }
-                    $this->totalNodes++;
-                    break;
+        $previous = null;
+        $currentNode = $this->head;
+        while ($currentNode !== null) {
+            if ($currentNode->data === $query) {
+                $newNode->next = $currentNode;
+                if (!empty($previous)) {
+                    $previous->next = $newNode;
                 }
-                $previous = $currentNode;
-                $currentNode = $currentNode->next;
+                $this->totalNodes++;
+                break;
             }
+            $previous = $currentNode;
+            $currentNode = $currentNode->next;
         }
     }
 
     public function insertAfterNode(int | string $data = null, int | string $query = null): void
     {
+        if (!$this->head) {
+            return;
+        }
         $newNode = new Node($data);
-        if ($this->head) {
-            $nextNode = null;
-            $currentNode = $this->head;
-            while ($currentNode !== null) {
-                if ($currentNode->data === $query) {
-                    if ($nextNode !== null) {
-                        $newNode->next = $nextNode;
-                    }
-                    $currentNode->next = $newNode;
-                    $this->totalNodes++;
-                    break;
+        $nextNode = null;
+        $currentNode = $this->head;
+        while ($currentNode !== null) {
+            if ($currentNode->data === $query) {
+                if ($nextNode !== null) {
+                    $newNode->next = $nextNode;
                 }
-                $currentNode = $currentNode->next;
-                $nextNode = $currentNode?->next;
+                $currentNode->next = $newNode;
+                $this->totalNodes++;
+                break;
             }
+            $currentNode = $currentNode->next;
+            $nextNode = $currentNode?->next;
         }
     }
 
     public function deleteFirstNode(): bool
     {
-        if ($this->head) {
-            if ($this->head->next !== null) {
-                $this->head = $this->head->next;
-                $this->totalNodes--;
-                return true;
-            }
-            $this->head = null;
+        if (!$this->head) {
+            return false;
+        }
+        if ($this->head->next !== null) {
+            $this->head = $this->head->next;
             $this->totalNodes--;
             return true;
         }
-        return false;
+        $this->head = null;
+        $this->totalNodes--;
+        return true;
     }
 
     public function deleteLastNode(): bool
@@ -232,11 +234,11 @@ class LinkedList implements \Iterator
     public function getNthNode(int $position = 0): ?Node
     {
         $count = 1;
-        if ($this->head !== null) {
-            $currentNode = $this->head;
-            return $this->iterateToFindNode($currentNode, $count, $position);
+        if ($this->head === null) {
+            return null;
         }
-        return null;
+        $currentNode = $this->head;
+        return $this->iterateToFindNode($currentNode, $count, $position);
     }
 
     private function iterateToFindNode(Node $currentNode, int $count, int $position): ?Node

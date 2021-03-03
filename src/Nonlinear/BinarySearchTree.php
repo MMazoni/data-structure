@@ -127,10 +127,10 @@ class BinarySearchTree
     public function delete(int $data): bool
     {
         $node = $this->search($data);
-        if ($node) {
-            $node->delete();
-            return true;
+        if (!$node) {
+            return false;
         }
-        return false;
+        $node->delete();
+        return true;
     }
 }

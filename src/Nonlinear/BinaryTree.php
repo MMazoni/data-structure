@@ -13,17 +13,18 @@ class BinaryTree
 
     public function traverse(?BinaryNode $node, int $level = 0): void
     {
-        if ($node) {
-            echo str_repeat('-', $level);
-            echo ($node->data ?? '') . PHP_EOL;
+        if (!$node) {
+            return;
+        }
+        echo str_repeat('-', $level);
+        echo ($node->data ?? '') . PHP_EOL;
 
-            if ($node->left) {
-                $this->traverse($node->left, $level + 1);
-            }
+        if ($node->left) {
+            $this->traverse($node->left, $level + 1);
+        }
 
-            if ($node->right) {
-                $this->traverse($node->right, $level + 1);
-            }
+        if ($node->right) {
+            $this->traverse($node->right, $level + 1);
         }
     }
 }

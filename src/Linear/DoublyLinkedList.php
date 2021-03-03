@@ -44,89 +44,93 @@ class DoublyLinkedList
 
     public function insertBeforeNode(int | string $data = null, int | string $query = null): void
     {
+        if (!$this->head) {
+            return;
+        }
         $newNode = new Node($data);
-        if ($this->head) {
-            $previous = null;
-            $currentNode = $this->head;
-            while ($currentNode !== null) {
-                if ($currentNode->data === $query) {
-                    $newNode->next = $currentNode;
-                    $currentNode->previous = $newNode;
-                    if (!empty($previous)) {
-                        $previous->next = $newNode;
-                    }
-                    $newNode->previous = $previous;
-                    $this->totalNodes++;
-                    break;
+
+        $previous = null;
+        $currentNode = $this->head;
+        while ($currentNode !== null) {
+            if ($currentNode->data === $query) {
+                $newNode->next = $currentNode;
+                $currentNode->previous = $newNode;
+                if (!empty($previous)) {
+                    $previous->next = $newNode;
                 }
-                $previous = $currentNode;
-                $currentNode = $currentNode->next;
+                $newNode->previous = $previous;
+                $this->totalNodes++;
+                break;
             }
+            $previous = $currentNode;
+            $currentNode = $currentNode->next;
         }
     }
 
     public function insertAfterNode(int | string $data = null, int | string $query = null): void
     {
         $newNode = new Node($data);
-        if ($this->head) {
-            $nextNode = null;
-            $currentNode = $this->head;
-            while ($currentNode !== null) {
-                if ($currentNode->data === $query) {
-                    if ($nextNode !== null) {
-                        $newNode->next = $nextNode;
-                    }
-                    if ($this->head->data === $query) {
-                        $nextNode = $currentNode->next;
-                        $newNode->next = $nextNode;
-                    }
-                    if ($currentNode === $this->tail) {
-                        $this->tail = $newNode;
-                    }
-                    $currentNode->next = $newNode;
-                    if (!empty($nextNode)) {
-                        $nextNode->previous = $newNode;
-                    }
-                    $newNode->previous = $currentNode;
-                    $this->totalNodes++;
-                    break;
+        if (!$this->head) {
+            return;
+        }
+        $nextNode = null;
+        $currentNode = $this->head;
+        while ($currentNode !== null) {
+            if ($currentNode->data === $query) {
+                if ($nextNode !== null) {
+                    $newNode->next = $nextNode;
                 }
-                $currentNode = $currentNode->next;
-                $nextNode = $currentNode?->next;
+                if ($this->head->data === $query) {
+                    $nextNode = $currentNode->next;
+                    $newNode->next = $nextNode;
+                }
+                if ($currentNode === $this->tail) {
+                    $this->tail = $newNode;
+                }
+                $currentNode->next = $newNode;
+                if (!empty($nextNode)) {
+                    $nextNode->previous = $newNode;
+                }
+                $newNode->previous = $currentNode;
+                $this->totalNodes++;
+                break;
             }
+            $currentNode = $currentNode->next;
+            $nextNode = $currentNode?->next;
         }
     }
 
     public function deleteFirstNode(): bool
     {
-        if ($this->head) {
-            if ($this->head->next !== null) {
-                $this->head = $this->head->next;
-                $this->head->previous = null;
-                $this->totalNodes--;
-                return true;
-            }
-            $this->head = null;
+        if (!$this->head) {
+            return false;
+        }
+        if ($this->head->next !== null) {
+            $this->head = $this->head->next;
+            $this->head->previous = null;
             $this->totalNodes--;
             return true;
         }
-        return false;
+        $this->head = null;
+        $this->totalNodes--;
+        return true;
     }
 
     public function deleteLastNode(): bool
     {
-        if ($this->tail !== null) {
-            $currentNode = $this->tail;
-            if ($currentNode->previous != null) {
-                $previousNode = $currentNode->previous;
-                $this->tail = $previousNode;
-                $previousNode->next = null;
-                $this->totalNodes--;
-                return true;
-            }
-            $this->head = null;
-            $this->tail = null;
+        if ($this->tail === null) {
+            return false;
         }
+        $currentNode = $this->tail;
+        if ($currentNode->previous != null) {
+            $previousNode = $currentNode->previous;
+            $this->tail = $previousNode;
+            $previousNode->next = null;
+            $this->totalNodes--;
+            return true;
+        }
+        $this->head = null;
+        $this->tail = null;
         return false;
     }
 

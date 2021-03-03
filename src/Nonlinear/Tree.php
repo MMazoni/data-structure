@@ -13,13 +13,14 @@ class Tree
 
     public function traverse(?TreeNode $node, int $level = 0): void
     {
-        if ($node) {
-            echo str_repeat("-", $level);
-            echo $node->data . PHP_EOL;
+        if (!$node) {
+            return;
+        }
+        echo str_repeat("-", $level);
+        echo $node->data . PHP_EOL;
 
-            foreach ($node->children as $childNode) {
-                $this->traverse($childNode, $level + 1);
-            }
+        foreach ($node->children as $childNode) {
+            $this->traverse($childNode, $level + 1);
         }
     }
 }

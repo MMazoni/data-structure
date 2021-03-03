@@ -132,43 +132,44 @@ class DoublyLinkedList
 
     public function deleteNode(int | string | null $query = null): bool
     {
-        if ($this->head) {
-            $previous = null;
-            $currentNode = $this->head;
-            while ($currentNode !== null) {
-                $isDeleted = $this->chooseNodeToDelete($currentNode, $previous, $query);
-                if ($isDeleted) {
-                    return $isDeleted;
-                }
-                $previous = $currentNode;
-                $currentNode = $currentNode->next;
+        if (!$this->head) {
+            return false;
+        }
+        $previous = null;
+        $currentNode = $this->head;
+        while ($currentNode !== null) {
+            $isDeleted = $this->chooseNodeToDelete($currentNode, $previous, $query);
+            if ($isDeleted) {
+                return $isDeleted;
             }
+            $previous = $currentNode;
+            $currentNode = $currentNode->next;
         }
         return false;
     }
 
     private function chooseNodeToDelete(Node $currentNode, ?Node $previous, string | int | null $query): bool
     {
-        if ($currentNode->data === $query) {
-            if ($currentNode->next === null && !is_null($previous)) {
-                $previous->next = null;
-            }
-            if ($currentNode->next !== null && !is_null($previous)) {
-                $previous->next = $currentNode->next;
-                $currentNode->next->previous = $previous;
-            }
-            if ($this->head?->data === $query && isset($currentNode->next->previous)) {
-                $this->head = $currentNode->next;
-                $this->head->previous = null;
-            }
-            if ($this->tail?->data === $query && $currentNode->data !== $query && isset($currentNode->next->next)) {
-                $this->tail = $currentNode->next;
-                $this->tail->next = null;
-            }
-            $this->totalNodes--;
-            return true;
+        if ($currentNode->data !== $query) {
+            return false;
         }
-        return false;
+        if ($currentNode->next === null && !is_null($previous)) {
+            $previous->next = null;
+        }
+        if ($currentNode->next !== null && !is_null($previous)) {
+            $previous->next = $currentNode->next;
+            $currentNode->next->previous = $previous;
+        }
+        if ($this->head?->data === $query && isset($currentNode->next->previous)) {
+            $this->head = $currentNode->next;
+            $this->head->previous = null;
+        }
+        if ($this->tail?->data === $query && $currentNode->data !== $query && isset($currentNode->next->next)) {
+            $this->tail = $currentNode->next;
+            $this->tail->next = null;
+        }
+        $this->totalNodes--;
+        return true;
     }
 
     public function displayForward(): void

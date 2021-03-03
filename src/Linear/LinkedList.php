@@ -138,40 +138,40 @@ class LinkedList implements \Iterator
 
     public function deleteLastNode(): bool
     {
-        if ($this->head !== null) {
-            $currentNode = $this->head;
-            if ($currentNode->next === null && $this->totalNodes > 1) {
-                $this->head = null;
-                return false;
-            }
-            if ($currentNode->next !== null) {
-                $previousNode = null;
-                while ($currentNode?->next !== null) {
-                    $previousNode = $currentNode;
-                    $currentNode = $currentNode?->next;
-                }
-                if (!empty($previousNode)) {
-                    $previousNode->next = null;
-                }
-            }
-            if ($currentNode?->next === null && $this->totalNodes === 1) {
-                $this->head = null;
-            }
-
-            $this->totalNodes--;
-            return true;
+        if ($this->head === null) {
+            return false;
         }
-        return false;
+        $currentNode = $this->head;
+        if ($currentNode->next === null && $this->totalNodes > 1) {
+            $this->head = null;
+            return false;
+        }
+        if ($currentNode->next !== null) {
+            $previousNode = null;
+            while ($currentNode?->next !== null) {
+                $previousNode = $currentNode;
+                $currentNode = $currentNode?->next;
+            }
+            if (!empty($previousNode)) {
+                $previousNode->next = null;
+            }
+        }
+        if ($currentNode?->next === null && $this->totalNodes === 1) {
+            $this->head = null;
+        }
+
+        $this->totalNodes--;
+        return true;
     }
 
     public function deleteNode(int | string $query = null): bool
     {
-        if ($this->head) {
-            $previous = null;
-            $currentNode = $this->head;
-            return $this->findToDelete($currentNode, $previous, $query);
+        if (!$this->head) {
+            return false;
         }
-        return false;
+        $previous = null;
+        $currentNode = $this->head;
+        return $this->findToDelete($currentNode, $previous, $query);
     }
 
     private function findToDelete(Node $currentNode, ?Node $previous, int | string | null $query): bool

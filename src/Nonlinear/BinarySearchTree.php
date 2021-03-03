@@ -64,41 +64,44 @@ class BinarySearchTree
 
     public function inOrder(?Node $node): void
     {
-        if ($node) {
-            if ($node->left()) {
-                $this->traverse($node->left());
-            }
-            echo ($node->data() ?? '') . PHP_EOL;
-            if ($node->right()) {
-                $this->traverse($node->right());
-            }
+        if (!$node) {
+            return;
+        }
+        if ($node->left()) {
+            $this->traverse($node->left());
+        }
+        echo ($node->data() ?? '') . PHP_EOL;
+        if ($node->right()) {
+            $this->traverse($node->right());
         }
     }
 
     public function preOrder(?Node $node): void
     {
-        if ($node) {
-            echo ($node->data() ?? '') . PHP_EOL;
-            if ($node->left()) {
-                $this->traverse($node->left(), 'pre-order');
-            }
-            if ($node->right()) {
-                $this->traverse($node->right(), 'pre-order');
-            }
+        if (!$node) {
+            return;
+        }
+        echo ($node->data() ?? '') . PHP_EOL;
+        if ($node->left()) {
+            $this->traverse($node->left(), 'pre-order');
+        }
+        if ($node->right()) {
+            $this->traverse($node->right(), 'pre-order');
         }
     }
 
     public function postOrder(?Node $node): void
     {
-        if ($node) {
-            if ($node->left()) {
-                $this->traverse($node->left(), 'post-order');
-            }
-            if ($node->right()) {
-                $this->traverse($node->right(), 'post-order');
-            }
-            echo ($node->data() ?? '') . PHP_EOL;
+        if (!$node) {
+            return;
         }
+        if ($node->left()) {
+            $this->traverse($node->left(), 'post-order');
+        }
+        if ($node->right()) {
+            $this->traverse($node->right(), 'post-order');
+        }
+        echo ($node->data() ?? '') . PHP_EOL;
     }
 
     public function search(int $data): Node | false | null

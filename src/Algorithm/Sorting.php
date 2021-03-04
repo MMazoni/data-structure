@@ -28,7 +28,7 @@ class Sorting
     public static function insertingSort(array &$array): void
     {
         $length = count($array);
-        for ($i = 1; $i < $length; $i ++) {
+        for ($i = 1; $i < $length; $i++) {
             $key = $array[$i];
             $j = $i - 1;
 

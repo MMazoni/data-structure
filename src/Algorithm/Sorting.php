@@ -25,6 +25,26 @@ class Sorting
         return $array;
     }
 
+    public static function selectionSort(array $array): array
+    {
+        $lenght = count($array);
+        for ($i = 0; $i < $lenght; $i++) {
+            $min = $i;
+            for ($j = $i + 1; $j < $lenght; $j++) {
+                if ($array[$j] < $array[$min]) {
+                    $min = $j;
+                }
+            }
+
+            if ($min != $i) {
+                $tmp = $array[$i];
+                $array[$i] = $array[$min];
+                $array[$min] = $tmp;
+            }
+        }
+        return $array;
+    }
+
     public static function insertingSort(array &$array): void
     {
         $length = count($array);

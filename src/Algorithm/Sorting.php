@@ -100,4 +100,37 @@ class Sorting
 
         return self::merge($left, $right);
     }
+
+    private static function partition(array &$array, int $p, int $r): int
+    {
+        $pivot = $array[$p];
+        $i = $p - 1;
+        $j = $r + 1;
+        while (true) {
+            do {
+                $i++;
+            } while ($array[$i] < $pivot && $array[$i] != $pivot);
+            do {
+                $j--;
+            } while ($array[$j] > $pivot && $array[$j] != $pivot);
+
+            if ($i < $j) {
+                $temp = $array[$i];
+                $array[$i] = $array[$j];
+                $array[$j] = $temp;
+            } else {
+                return $j;
+            }
+        }
+        return $j;
+    }
+
+    public static function quickSort(array &$array, int $p, int $r): void
+    {
+        if ($p < $r) {
+            $q = self::partition($array, $p, $r);
+            self::quickSort($array, $p, $q);
+            self::quickSort($array, $q + 1, $r);
+        }
+    }
 }

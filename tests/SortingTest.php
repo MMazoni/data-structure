@@ -31,4 +31,13 @@ final class SortingTest extends TestCase
         Sorting::insertingSort($array);
         echo implode(",", $array);
     }
+
+    public function tesCanMergeSort(): void
+    {
+        $expected = '10,20,33,45,52,67,88,92,93,97';
+        $this->expectOutputString($expected);
+        $array = [20, 45, 93, 67, 10, 97, 52, 88, 33, 92];
+        Sorting::mergesort($array);
+        echo implode(",", $array);
+    }
 }

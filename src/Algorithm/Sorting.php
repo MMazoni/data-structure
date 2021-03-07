@@ -59,4 +59,45 @@ class Sorting
             $array[$j + 1] = $key;
         }
     }
+
+    private static function merge(array $left, array $right): array
+    {
+        $combined = [];
+        $countLeft = count($left);
+        $countRight = count($right);
+        $leftIndex = $rightIndex = 0;
+
+        while ($leftIndex < $countLeft && $rightIndex < $countRight) {
+            if ($left[$leftIndex] > $right[$rightIndex]) {
+                $combined[] = $right[$rightIndex];
+                $rightIndex++;
+            } else {
+                $combined[] = $left[$leftIndex];
+                $leftIndex++;
+            }
+        }
+        while ($leftIndex < $countLeft) {
+            $combined[] = $left[$leftIndex];
+            $leftIndex++;
+        }
+        while ($rightIndex < $countRight) {
+            $combined[] = $right[$rightIndex];
+            $rightIndex++;
+        }
+        return $combined;
+    }
+
+    public static function mergesort(array $array): array
+    {
+        $length = count($array);
+        $mid = (int) ($length / 2);
+        if ($length == 1) {
+            return $array;
+        }
+
+        $left  = self::mergeSort(array_slice($array, 0, $mid));
+        $right = self::mergeSort(array_slice($array, $mid));
+
+        return self::merge($left, $right);
+    }
 }

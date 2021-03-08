@@ -1,0 +1,5 @@
+tasks:
+  - init: composer install
+    command: composer install
+image:
+  file: Dockerfile
